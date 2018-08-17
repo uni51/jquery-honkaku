@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>delegateTargetプロパティが指す要素</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <form></form>
+    <div></div>
+    <script>// <![CDATA[
+      var form = $('form').css({margin: 3, padding: 3, width: '7em'});
+
+      var buttons = [  // <input type="checkbox">の値とラベル(<label>)
+        {val: 'tokyo', label: '東京'}, {val: 'osaka', label: '大阪'}
+      ];
+
+      // イベントハンドラ
+      var handler = function(ev) {
+        // ev.delegateTargetは$('div')のうち
+        // イベントが発火した要素の先祖要素を表す
+        if (form.find(':checked').length > 0) {
+          // チェックボックスのどれかにレ印があるとき
+          $('div').empty();
+          $(ev.delegateTarget).css('backgroundColor', 'transparent');
+        } else {
+          // どのチェックボックスにもレ印がないとき
+          $('div').text('どれかを選択してください');
+          $(ev.delegateTarget).css('backgroundColor', 'pink');
+        }
+      };
+
+      // <input type="checkbox">と<label>をHTML文書に追加
+      $.each(buttons, function(idx, attr) {
+        $('<input>', $.extend({id: attr.val, type: 'checkbox'}, attr))
+          .appendTo(form);
+        $('<label>', {for: attr.val, text: attr.label}).appendTo(form);
+      });
+
+      // イベントハンドラの設定
+      form.on('submit', false).on('change', 'input[type="checkbox"]', handler);
+      $('input[type="checkbox"]', form).change();
+    // ]]></script>
+  </body>
+</html>

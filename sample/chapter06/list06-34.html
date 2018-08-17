@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>複数の処理を登録する</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      function handler(i) {
+        return function(name) { alert(i + '回目の' + name); };
+
+        /*
+        return function(name) {
+          document.write(i + '回目の' + name + '<br />');
+        };
+        */
+      }
+
+      $.Deferred().done(handler(1), handler(2)).resolve('resolved');
+      $.Deferred().reject('rejected').fail(handler(1)).fail(handler(2));
+      $.Deferred().progress([handler(1), handler(2)]).notify('pending');
+    // ]]></script>
+  </body>
+</html>

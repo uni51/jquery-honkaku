@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>jqXHRへの処理の登録とイベント処理との関係</title>
+    <style>
+      table { border-collapse: collapse; }
+      th, td { padding: 3px;  border: 1px solid black; }
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <input type="button" value="success" />
+      <input type="button" value="error" />
+    </div>
+    <table>
+      <tr>
+        <th>success</th><th>error</th><th>complete</th>
+      </tr>
+      <tr>
+        <td id="success"></td><td id="error"></td><td id="complete"></td>
+      </tr>
+    </table>
+    <script>// <![CDATA[
+      // ajaxSuccess, ajaxError, ajaxCompleteの設定
+      var eventHandler = function(ev, jqXHR, options) {
+        var id = ev.type.replace(/ajax(.)/, function() {
+                   return '#' + arguments[1].toLowerCase();
+                 });
+        $(id).append(ev.type + (options && (', url = ' + options.url)) + '<br />');
+      };
+      $(document).ajaxSuccess(eventHandler);
+      $(document).ajaxError(eventHandler);
+      $(document).ajaxComplete(eventHandler);
+
+      // Deferredオブジェクトの状態が遷移した後に実行する処理
+      var deferredHandler = function(id, s) {
+        return function() {
+          $(document.getElementById(id)).append(s);
+        };
+      };
+      // $.getJSON, $.ajaxに設定する関数
+      var callback = function(method, id) {
+        return function() {
+          var jqXHR = arguments[1] === 'success' ? arguments[2] : arguments[0];
+          jqXHR[method](deferredHandler(id, method + '(callback)<br />'))
+               .always(deferredHandler('complete', 'complete(' + method + ', callback)<br />'));
+        };
+      };
+
+      // 通信成功(resolved)
+      var successJqXHR = $.getJSON('emptyobj.json', callback('done', 'success'));
+      // 通信失敗(rejected)
+      var errorJqXHR   = $.ajax({url: 'dummy', error: callback('fail', 'error')});
+
+      // Ajax通信処理の後にdone、fail、completeで処理を登録(すぐに実行される)
+      successJqXHR.done(deferredHandler('success', 'done(jqXHR)<br />'))
+                  .always(deferredHandler('complete', 'complete(success, jqXHR)<br />'));
+      errorJqXHR.fail(deferredHandler('error', 'fail(jqXHR)<br />'))
+                .always(deferredHandler('complete', 'complete(error, jqXHR)<br />'));
+
+      // ボタンがクリックされてからdone、fail、completeで処理を登録
+      // (登録された処理はその時点ですぐ実行)
+      $('input[type="button"]:first').click(function(ev) {
+        // jqXHRオブジェクトに登録した処理はAjax通信処理後でも実行される
+        successJqXHR.done(deferredHandler('success', 'done(click)<br />'))
+                    .always(deferredHandler('complete', 'complete(success, click)<br />'));
+        // Ajax通信処理後にajaxSuccess, ajaxCompleteで追加された処理は実行されない
+        $(document).ajaxSuccess(eventHandler);
+        $(document).ajaxComplete(eventHandler);
+      });
+      $('input[type="button"]:last').click(function(ev) {
+        // jqXHRオブジェクトに登録した処理はAjax通信処理後でも実行される
+        errorJqXHR.fail(deferredHandler('error', 'fail(click)<br />'))
+                  .always(deferredHandler('complete', 'complete(error, click)<br />'));
+        // Ajax通信処理後にajaxError, ajaxCompleteで追加された処理は実行されない
+        $(document).ajaxError(eventHandler);
+        $(document).ajaxComplete(eventHandler);
+      });
+    // ]]></script>
+  </body>
+</html>

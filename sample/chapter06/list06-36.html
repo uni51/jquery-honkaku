@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>状態を遷移させないメソッド</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      var div = $('<div>').appendTo(document.body);
+
+      // progressで処理キューに追加
+      var def = $.Deferred().progress(function(s) { div.text(s); });
+
+      // notifyを何度実行してもDeferredオブジェクトの状態は'pending'のまま
+      setInterval(function() { def.notify(new Date().toLocaleString()); }, 998);
+    // ]]></script>
+  </body>
+</html>

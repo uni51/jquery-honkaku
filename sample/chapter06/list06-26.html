@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>イベント処理の中止</title>
+    <style>
+      input[type=text] { outline: 2px solid transparent; }
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <form>
+      <label for="comment">コメント(5文字以上)</label>
+      <input id="comment" name="comment" type="text" size="20" value="" /><br />
+      <input type="submit" value="送信" disabled="disabled" />
+    </form>
+    <script>// <![CDATA[
+      // フォームのイベント処理
+      $('form').submit(function(ev) {
+        // 文字数が足らなければ送信しない
+        if ($('input[type="text"]').val().trim().length < 5) ev.preventDefault();
+      }).keyup(function() {
+        // フィールドの文字数が5文字以上になると実行される処理
+        $('input[type="text"]').css('outlineColor', 'blue');
+        $('input[type="submit"]').prop('disabled', false);
+      });
+
+      // フィールドのイベント処理
+      $('input[type="text"]').on('focus blur keyup', function(ev) {
+        // 最初に実行される処理
+        $('input[type="submit"]').prop('disabled', true);    // 送信ボタンはクリック不可
+        $('input[type="text"]').css('outlineColor', 'red');  // 枠線は赤色
+        if ($(this).val().trim().length < 1) ev.stopImmediatePropagation();
+      }).keyup(function(ev) {
+        // 文字が入力されると実行される処理
+        $('input[type="text"]').css('outlineColor', 'gold');
+        if ($(this).val().trim().length < 5)  ev.stopPropagation();
+      });
+    // ]]></script>
+  </body>
+</html>

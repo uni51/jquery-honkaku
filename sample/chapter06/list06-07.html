@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>フォーカスが当たる要素とイベント処理</title>
+    <style>
+      form  { padding: 3px; }
+      div   { margin-bottom: 0.5em;  padding: 0.5em;  border-radius: 5px; }
+      label { line-height: 1.7em; }
+      input[type=text] { line-height: 1.7em;  outline: solid 2px transparent; }
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <form onsubmit="return false;">
+      <div>
+        <fieldset>
+          <legend>住まいについてのアンケート</legend>
+          <label for="city">住みたい街はどこですか?</label>
+          <input name="city" type="text" size="10" /><br />
+          <label for="reason">その理由は?</label>
+          <input name="city" type="text" size="30" />
+        </fieldset>
+      </div>
+      <input type="submit" value="回答する" />
+    </form>
+    <script>// <![CDATA[
+      var bgColor = 'backgroundColor';
+      var olColor = 'outlineColor';
+
+      // 入力フィールドにfocus/blurに対応するイベントハンドラを登録
+      $('input[type="text"]').focus(function() { $(this).css(olColor, 'red'); })
+                     .blur(function() { $(this).css(olColor, 'transparent'); });
+
+      // フィールドのまとまりにfocusin/focusoutに対応するイベントハンドラを登録
+      $('div').focusin(function() { $(this).css(bgColor, '#ffe4c4'); })
+              .focusout(function() { $(this).css(bgColor, 'transparent'); });
+    // ]]></script>
+  </body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>$.ajaxPrefilterとdataType, convertersとの関係</title>
+    <script src="../lib/jquery-1.11.1.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // filter1
+      $.ajaxPrefilter('dataType1', function(options, originalOptions, jqXHR) {
+        $(document.body).append('filter1 ');
+        return 'text';
+      });
+
+      // filter2
+      $.ajaxPrefilter('dataType2 dataType3', function(options, originalOptions, jqXHR) {
+        $(document.body).append('filter2 ');
+        return 'html';
+      });
+
+      var converter = function(s) {
+        return function(text) {
+          return text + ' ' + s;
+        };
+      };
+
+      var handler = function(value) {
+        return function() {
+          $(document.body).append("<br /><strong>'" + value + "'</strong> ");
+          $.ajax({
+            dataType: value, url: 'htmlcontent.html',
+            converters: {
+              'text dataType1':      converter('converter1'),
+              'html dataType2':      converter('converter2'),
+              'html dataType3':      converter('converter3'),
+              'dataType1 dataType2': converter('converter4'),
+              'dataType2 dataType3': converter('converter5')
+            },
+            context: document.body,
+            success: function(data, statusText, jqXHR) {
+              $(this).append(data);
+            },
+            error: function(jqXHR, statusText, error) {
+              $(this).append(error);
+            }
+          });
+        }
+      };
+
+      var div = $('<div>', {html: '<h4>dataTypeの値</h4>'}).appendTo(document.body);
+      $.each(['dataType1', 'dataType2', 'dataType3',
+              'dataType1 dataType2', 'dataType2 dataType3',
+              'dataType1 dataType2 dataType3'],
+        function(idx, value) {
+          if (idx === 3 || idx === 5)  $('<br />').appendTo(div);
+          $('<input>', {name: 'dataType', type: 'radio', val: value,
+                        change: handler(value)}).appendTo(div);
+          $(div).append("'" + value + "' ");
+      });
+    // ]]></script>
+  </body>
+</html>

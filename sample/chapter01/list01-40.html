@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>子要素を数える</title>
+    <style>
+      body { width: 30em; }   /* レイアウト用(jQueryの利用には影響しない) */
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div id="main">
+      <p>Webブラウザの画面はHTMLとCSSで表現します。</p>
+      <p>表示した画面の一部を変更するときにはJavaScriptが用いられます。</p>
+      <ul id="tech">
+        <li>HTML</li>
+        <li>CSS</li>
+        <li>JavaScript</li>
+      </ul>
+      <p>jQueryとjQuery UIはJavaScriptライブラリです</p>
+      <ul id="libs">
+        <li>jQuery</li>
+        <li>jQuery UI</li>
+      </ul>
+    </div>
+    <script>// <![CDATA[
+      (function($) {
+        // 結果表示用
+        function write(target, num) {
+          target = target.replace('&', '&amp;').replace('"', '&quot;')
+                         .replace('<', '&lt;').replace('>', '&gt;');
+          document.write('<br>' + target + 'の子要素の数 = ' + num);
+        }
+
+        // jQueryで子要素を数える
+        function countChildrenByjQuery() {
+          document.write('<hr><strong>jQueryで子要素を数える</strong>');
+          write('<div>', $('div').children().length);
+          write('<ul id="tech">', $('#tech').children().length);
+          write('<ul id="libs">', $('#libs').children().length);
+        }
+
+        // DOM APIで子要素を数える
+        function countChildrenByDOM() {
+          document.write('<hr><strong>DOM APIで子要素を数える</strong>');
+          write('<div>', document.getElementById('main').childNodes.length);
+          write('<ul id="tech">', document.getElementById('tech').childNodes.length);
+          write('<ul id="libs">', document.getElementById('libs').childNodes.length);
+        }
+
+        // DOM APIでタグの子要素のみを数える
+        function countChildElementsByDOM() {
+          document.write('<hr><strong>DOM APIでタグの子要素のみを数える</strong>');
+          write('<div>', document.getElementById('main').childElementCount);
+          write('<ul id="tech">', document.getElementById('tech').childElementCount);
+          write('<ul id="libs">', document.getElementById('libs').childElementCount);
+        }
+
+        countChildrenByjQuery();
+        countChildrenByDOM();
+        countChildElementsByDOM();
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>

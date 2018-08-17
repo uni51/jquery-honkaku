@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>[改訂新版jQuery本格入門] サンプルプログラム集</title>
+    <link rel="stylesheet" href="lib/jquery-ui-1.11.0.min.css" />
+    <style>
+      #main { margin: auto;  width: 35em; }
+      #main p { text-indent: 1em; }
+      #footer { font-size: 80%;  text-align: center; }
+      .right { text-align: right; }
+
+      /*** ウィジェットのデザインをカスタマイズ ***/
+      #accordion     { margin: 1em auto;  padding: 0; }
+      #accordion div { padding: 1em; }
+      #accordion td  { font-size: 80%;  padding: 0.3em; }
+      #accordion td:first-of-type { white-space: nowrap; }
+    </style>
+    <!-- jQuery, jQuery UIの組み込み -->
+    <script src="lib/jquery-1.11.1.min.js"></script>
+    <script src="lib/jquery-ui-1.11.0.min.js"></script>
+  </head>
+  <body>
+    <div id="main">
+      <h3>「改訂新版jQuery本格入門」 サンプルプログラム集</h3>
+      <p>「改訂新版jQuery本格入門」(以下、本書) をお読みいただきありがとうございます。このファイルは本書に掲載したサンプルプログラムの一部を収録したものです。本書をお読みいただく際の参考になれば幸いです。</p>
+      <p>サンプルプログラムはchapter00_prelude～chapter08およびappendix_bの各フォルダ(ディレクトリ)に章別に収めてあります。jQueryやQUnitなどのライブラリはlibディレクトリ以下に収めてあります。これらも必要に応じて参考にしてください。</p>
+      <p>なお、第7章のサンプルプログラムは、PHPによるサーバアプリケーションを含んでいますので、chapter07フォルダ(ディレクトリ)以下すべてをPHPプログラムを実行できるWebサーバ環境にコピーすると実行できるようになります。</p>
+      <p class="right">(筆者より)</p>
+      <div id="accordion">
+        <h3>第1章</h3>
+        <div>
+          <table>
+            <tr><td><a target="example" href="chapter01/fig01-01.html">図1-1</a></td><td>HTML文書内の要素の階層構造の例</td></tr>
+            <tr><td><a target="example" href="chapter01/list01-08.html">リスト1-8</a></td><td>擬似クラス(セレクタ)による要素の指定例(2)</td></tr>
+            <tr><td><a target="example" href="chapter01/list01-09.html">リスト1-9</a></td><td>擬似クラス(セレクタ)による要素の指定例(3)</td></tr>
+            <tr><td><a target="example" href="chapter01/list01-18.html">リスト1-18</a></td><td>メソッドの例で対象にしているHTML文書</td></tr>
+            <tr><td><a target="example" href="chapter01/list01-40.html">リスト1-40</a></td><td>子要素を数える</td></tr>
+          </table>
+        </div>
+        <h3>第2章</h3>
+        <div>
+          <table>
+            <tr><td><a target="example" href="chapter02/list02-09.html">リスト2-9</a></td><td>attrメソッドによる属性の設定と削除</td></tr>
+            <tr><td><a target="example" href="chapter02/list02-15.html">リスト2-15</a></td><td>propメソッドによるプロパティの設定と削除</td></tr>
+            <tr><td><a target="example" href="chapter02/list02-35.html">リスト2-35</a></td><td>各メソッドから得られる値</td></tr>
+          </table>
+        </div>
+        <h3>第3章</h3>
+        <div>
+          <table>
+            <tr><td><a target="example" href="chapter03/list03-03.html">リスト3-3</a></td><td>HTML形式の文字列から要素を生成する関数とその実行例</td></tr>
+            <tr><td><a target="example" href="chapter03/list03-25.html">リスト3-25</a></td><td>ユーザーから入力されたデータをそのまま表示(01)</td></tr>
+          </table>
+        </div>
+        <h3>第4章</h3>
+        <div>
+          <table>
+            <tr><td><a target="example" href="chapter04/list04-01.html">リスト4-1</a></td><td>要素の表示</td></tr>
+            <tr><td><a target="example" href="chapter04/list04-02.html">リスト4-2</a></td><td>要素の非表示(hide)と切り替え(toggle)</td></tr>
+            <tr><td><a target="example" href="chapter04/list04-03.html">リスト4-3</a></td><td>メソッドの実行順</td></tr>
+            <tr><td><a target="example" href="chapter04/list04-04.html">リスト4-4</a></td><td>slideUp/slideDown/slideToggleのアニメーション</td></tr>
+            <tr><td><a target="example" href="chapter04/list04-05.html">リスト4-5</a></td><td>fadeIn/fadeOut/fadeToggle/fadeToのアニメーション</td></tr>
+            <tr><td><a target="example" href="chapter04/list04-06.html">リスト4-6</a></td><td>animateの設定とアニメーションの動作</td></tr>
+            <tr><td><a target="example" href="chapter04/list04-07.html">リスト4-7</a></td><td>animateメソッドとキュー</td></tr>
+            <tr><td><a target="example" href="chapter04/list04-12.html">リスト4-12</a></td><td>queueとdequeueによるアニメーションの実行(5)</td></tr>
+            <tr><td><a target="example" href="chapter04/list04-13.html">リスト4-13</a></td><td>queueとdequeueによるアニメーションの実行(6)</td></tr>
+            <tr><td><a target="example" href="chapter04/list04-17.html">リスト4-17</a></td><td>名前付きキューに登録されたアニメーションの停止</td></tr>
+            <tr><td><a target="example" href="chapter04/list04-19.html">リスト4-19</a></td><td>オプションに設定される関数の実行順</td></tr>
+            <tr><td><a target="example" href="chapter04/list04-22.html">リスト4-22</a></td><td>easingのデモプログラム</td></tr>
+            <tr><td><a target="example" href="chapter04/list04-25.html">リスト4-25</a></td><td>色を変化させるデモプログラム</td></tr>
+          </table>
+        </div>
+        <h3>第5章</h3>
+        <div>
+          <table>
+            <tr><td><a target="example" href="chapter05/list05-01.html">リスト5-1</a></td><td>jQueryオブジェクトを$とは別の変数で代替</td></tr>
+            <tr><td><a target="example" href="chapter05/list05-02.html">リスト5-2</a></td><td>異なるバージョンのjQueryを共存</td></tr>
+            <tr><td><a target="example" href="chapter05/list05-06.html">リスト5-6</a></td><td>配列と同じ操作を行うメソッド</td></tr>
+            <tr><td><a target="example" href="chapter05/list05-07.html">リスト5-7</a></td><td>$(...)と$.parseHTMLとの組み合わせ</td></tr>
+            <tr><td><a target="example" href="chapter05/list05-08.html">リスト5-8</a></td><td>addやappendと$.parseHTMLとの組み合わせ</td></tr>
+            <tr><td><a target="example" href="chapter05/list05-13.html">リスト5-13</a></td><td>要素それぞれの繰り返し処理</td></tr>
+            <tr><td><a target="example" href="chapter05/list05-14.html">リスト5-14</a></td><td>配列の要素からHTMLを生成</td></tr>
+            <tr><td><a target="example" href="chapter05/list05-15.html">リスト5-15</a></td><td>$.eachにオブジェクトのプロパティを設定</td></tr>
+            <tr><td><a target="example" href="chapter05/list05-17.html">リスト5-17</a></td><td>mapメソッドの実行</td></tr>
+            <tr><td><a target="example" href="chapter05/list05-21.html">リスト5-21</a></td><td>thisの設定とfalseの処理も行うeach関数</td></tr>
+            <tr><td><a target="example" href="chapter05/list05-24.html">リスト5-24</a></td><td>オリジナルのmap関数</td></tr>
+            <tr><td><a target="example" href="chapter05/list05-25.html">リスト5-25</a></td><td>オリジナルのeach, mapをObject,Arrayのメソッドに拡張</td></tr>
+          </table>
+        </div>
+        <h3>第6章</h3>
+        <div>
+          <table>
+            <tr><td><a target="example" href="chapter06/list06-01.html">リスト6-1</a></td><td>ボタンがクリックされたらメッセージを表示</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-04.html">リスト6-4</a></td><td>クリックとボタンのイベント処理</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-05.html">リスト6-5</a></td><td>マウスカーソルと要素の重なり</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-06.html">リスト6-6</a></td><td>メソッドによるイベントの発火</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-07.html">リスト6-7</a></td><td>フォーカスが当たる要素とイベント処理</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-08.html">リスト6-8</a></td><td>change/select/submitのイベント処理</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-09.html">リスト6-9</a></td><td>イベントの発火順とキーコード</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-10.html">リスト6-10</a></td><td>特殊キーの押下を判定</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-11.html">リスト6-11</a></td><td>スクロールと要素の位置</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-12.html">リスト6-12</a></td><td>スクロール可能な要素</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-13.html">リスト6-13</a></td><td>readyと$.holdReady</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-14.html">リスト6-14</a></td><td>bindによるイベント処理の登録</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-15.html">リスト6-15</a></td><td>登録・削除に用いる名前空間</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-16.html">リスト6-16</a></td><td>delegate/undelegate</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-18.html">リスト6-18</a></td><td>$(...)によるイベント処理の設定</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-19.html">リスト6-19</a></td><td>on/offによるメソッドの統一</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-20.html">リスト6-20</a></td><td>offだけで指定できる'**'セレクタ</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-21.html">リスト6-21</a></td><td>triggerとtriggerHandlerの違い</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-22.html">リスト6-22</a></td><td>名前空間とカスタムイベントへの対応</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-23.html">リスト6-23</a></td><td>$.proxyによるイベント処理の委譲</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-24.html">リスト6-24</a></td><td>マウスカーソルの位置を表すプロパティ</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-25.html">リスト6-25</a></td><td>イベントの発火と関連する要素</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-26.html">リスト6-26</a></td><td>イベント処理の中止</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-27.html">リスト6-27</a></td><td>イベントオブジェクトによるデータの受け渡し</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-28.html">リスト6-28</a></td><td>clickをonに変更した場合</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-29.html">リスト6-29</a></td><td>delegateTargetプロパティが指す要素</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-34.html">リスト6-34</a></td><td>複数の処理を登録する</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-35.html">リスト6-35</a></td><td>処理中のthisの値を設定する</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-36.html">リスト6-36</a></td><td>状態を遷移させないメソッド</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-37.html">リスト6-37</a></td><td>状態を確認するstateメソッド</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-39.html">リスト6-39</a></td><td>thenの利用例</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-42.html">リスト6-42</a></td><td>カウンタウィジェット</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-43.html">リスト6-43</a></td><td>バーがすべて表示されたら完了を通知</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-45.html">リスト6-45</a></td><td>複数のアニメーションがすべて終了した後にdoneで登録した処理を実行</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-48.html">リスト6-48</a></td><td>$.whenにおけるprogress, then, doneの実行順</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-51.html">リスト6-51</a></td><td>カウンタの値が上限(もしくは下限)に達したらdoneに登録された処理を実行</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-52.html">リスト6-52</a></td><td>関数の登録と実行(1)</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-53.html">リスト6-53</a></td><td>関数の登録と実行(2)</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-54.html">リスト6-54</a></td><td>関数の登録と実行(3)</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-55.html">リスト6-55</a></td><td>関数の登録と削除</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-56.html">リスト6-56</a></td><td>Callbacksオブジェクトのフラグ</td></tr>
+            <tr><td><a target="example" href="chapter06/list06-57.html">リスト6-57</a></td><td>Callbacksオブジェクトの設定とその確認</td></tr>
+          </table>
+        </div>
+        <h3>第7章</h3>
+        <div>
+          <table>
+            <tr><td><a target="example" href="chapter07/list07-01.html">リスト7-1</a></td><td>JSONPのテスト</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-04.html">リスト7-4</a></td><td>loadメソッドによるコンテンツへのアクセス</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-06.html">リスト7-6</a></td><td>$.getメソッドによるコンテンツへのアクセス(Promise)</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-08.html">リスト7-8</a></td><td>$.getメソッドによるコンテンツへのアクセス(コールバック関数)</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-09.html">リスト7-9</a></td><td>$.getJSONと$.getScript</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-10.html">リスト7-10</a></td><td>$.getと$.postの違い(1) - サーバ側の対応</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-11.html">リスト7-11</a></td><td>$.getと$.postの違い(2) - XML形式のデータを送信</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-11.html">リスト7-11</a></td><td>Web関連技術</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-13.html">リスト7-13</a></td><td>serializeArray, serializeメソッドによるパラメータの生成</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-14.html">リスト7-14</a></td><td>$.ajaxによるGETとPOST</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-14.html">リスト7-14</a></td><td>Web関連技術</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-18.html">リスト7-18</a></td><td>CSVファイルを元に&lt;table&gt;を生成</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-19.html">リスト7-19</a></td><td>Webサーバから受信したCSVデータを元に&lt;table&gt;を生成</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-20.html">リスト7-20</a></td><td>dataTypeとconvertersとの関係</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-22.html">リスト7-22</a></td><td>JSONPによるRSSの読み込み</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-23.html">リスト7-23</a></td><td>$.ajaxSetupによるオプションの設定</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-28.html">リスト7-28</a></td><td>HTML文字列の生成処理(2)</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-30.html">リスト7-30</a></td><td>HTML文字列の生成処理(3)</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-32.html">リスト7-32</a></td><td>HTML文字列の生成処理(3)</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-34.html">リスト7-34</a></td><td>カスタムイベント処理の引数</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-35.html">リスト7-35</a></td><td>ヘッダの設定と取得</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-36.html">リスト7-36</a></td><td>jqXHRへの処理の登録とイベント処理との関係</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-37.html">リスト7-37</a></td><td>XDomainRequestオブジェクトによるクロスドメイン通信(IE限定)</td></tr>
+            <tr><td><a target="example" href="chapter07/list07-38.html">リスト7-38</a></td><td>$.ajaxPrefilterとdataType, convertersとの関係</td></tr>
+          </table>
+        </div>
+        <h3>第8章</h3>
+        <div>
+          <table>
+            <tr><td><a target="example" href="chapter08/list08-03.html">リスト8-3</a></td><td>合否の判定(1) - 真偽(Boolean)、等値(==)、同値(===)</td></tr>
+            <tr><td><a target="example" href="chapter08/list08-04.html">リスト8-4</a></td><td>合否の判定(2) - オブジェクトと配列</td></tr>
+            <tr><td><a target="example" href="chapter08/list08-05.html">リスト8-5</a></td><td>合否の判定(3) - プロパティの値</td></tr>
+            <tr><td><a target="example" href="chapter08/list08-06.html">リスト8-6</a></td><td>合否の判定(4) - 日付(Date)、正規表現(RegExp)、DOMオブジェクト</td></tr>
+            <tr><td><a target="example" href="chapter08/list08-07.html">リスト8-7</a></td><td>合否の判定(5) - エラー</td></tr>
+            <tr><td><a target="example" href="chapter08/list08-08.html">リスト8-8</a></td><td>モジュールの設定(Ajax同期通信テスト)</td></tr>
+            <tr><td><a target="example" href="chapter08/list08-09.html">リスト8-9</a></td><td>モジュールの設定(Ajax非同期通信テスト)</td></tr>
+            <tr><td><a target="example" href="chapter08/list08-10.html">リスト8-10</a></td><td>イベントハンドラの引数と実行順</td></tr>
+            <tr><td><a target="example" href="chapter08/list08-11.html">リスト8-11</a></td><td>オプションを設定してテスト実行</td></tr>
+            <tr><td><a target="example" href="chapter10/test_twittersearch.html">test_twittersearch.html</a></td><td>[Test] つぶやき検索のテスト(Powered by Twitter Search API)</td></tr>
+            <tr><td><a target="example" href="chapter10/twittersearch.html">twittersearch.html</a></td><td>[Demo] つぶやき検索(Powered by Twitter Search API)</td></tr>
+          </table>
+        </div>
+        <h3>Appendix B</h3>
+        <div>
+          <table>
+            <tr><td><a target="example" href="appendix_b/appold.js">リストB-1</a></td><td>テスト対象のアプリケーション(old)</td></tr>
+            <tr><td><a target="example" href="appendix_b/test_appold.js">リストB-2</a></td><td>アプリケーション用テストプログラム(old)</td></tr>
+            <tr><td><a target="example" href="appendix_b/test_migrate_old.html">リストB-4</a></td><td>テスト用のHTML文書(old)</td></tr>
+            <tr><td><a target="example" href="appendix_b/appnew.js">リストB-5</a></td><td>テスト対象のアプリケーション(new)</td></tr>
+            <tr><td><a target="example" href="appendix_b/test_appnew.js">リストB-6</a></td><td>アプリケーション用テストプログラム(new)</td></tr>
+            <tr><td><a target="example" href="appendix_b/test_migrate_new.html">リストB-7</a></td><td>テスト用のHTML文書(new)</td></tr>
+          </table>
+        </div>
+      </div>
+      <div id="footer">Copyright &copy; 2014 Masanori OKIBAYASHI All rights reserved.</div>
+    </div>
+    <script>// <![CDATA[
+      (function($) {
+        $('#accordion').accordion({
+          heightStyle: 'content', active: false,
+          header: 'h3', collapsible: true
+        });
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>

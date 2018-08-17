@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>$.ajaxSetupによるオプションの設定</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <input name="fish" type="radio" value="マグロ">マグロ
+      <input name="fish" type="radio" value="サケ">サケ
+      <input name="fish" type="radio" value="マス">マス
+    </div>
+    <script>// <![CDATA[
+      $.ajaxSetup({
+        dataFilter: function(response, dataType) {
+          if (dataType !== 'json')  return response;
+          // コメント部分を削除
+          return response.replace(/^\/\*[^\{]+(.+?)[^\}]+\*\/$/, "$1");
+        },
+        dataType: 'json',
+        global: false,
+        timeout: 3000,
+        url: 'dictionary.php'
+      });
+
+      $('input[type="radio"]').change(function() {
+        $.ajax({
+          data:{word: $(this).val()},
+          success: function(data, statusText, jqXHR) {
+            // マグロを選択したとき 'マグロ: tuna(en)'
+            $('<p>', {text: data.word + ': ' + data.answer + '(en)'})
+              .appendTo('div');
+        }});
+      });
+    // ]]></script>
+  </body>
+</html>

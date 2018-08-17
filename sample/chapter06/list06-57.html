@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Callbacksオブジェクトの設定とその確認</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // Callbacksオブジェクトに登録される関数
+      function write(s) { $('<div>', {text: s}).appendTo(document.body); }
+
+      // lock実行後も登録された関数やfire/fireWith実行の情報は残す
+      var callbacks = $.Callbacks('memory');
+      callbacks.add(write);
+
+      // 関数が登録されていることを確認
+      callbacks.has(write) && callbacks.fire('関数が登録されました');
+      // 1度でもfireが実行されたかを確認
+      callbacks.fired()    && callbacks.fire('fireが実行されました');
+
+      callbacks.lock();     // Callbacksオブジェクトをロックする
+      // lockが実行されたかを確認
+      callbacks.locked()   && write('Callbacksオブジェクトがロックされました');
+      callbacks.has(write) && write('関数はまだ登録されています');
+      callbacks.fired()    && write('fireが実行されました');
+
+      callbacks.disable();  // Callbacksオブジェクトの操作を無効にする
+      // disableが実行されたかを確認
+      callbacks.disabled() && write('Callbacksオブジェクトの操作が無効になりました');
+      callbacks.has(write) || write('関数の存在を確認できません');
+    // ]]></script>
+  </body>
+</html>

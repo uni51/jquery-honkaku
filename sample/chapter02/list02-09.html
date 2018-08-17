@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>attrメソッドによる属性の設定と削除</title>
+    <style>
+      /* レイアウト用CSS(jQueryの利用には影響しない) */
+      h4 { margin: 5px 0; }
+    </style>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <!-- CDNに接続できないときは以下を利用してください -->
+    <!-- script src="../lib/jquery-1.11.1.min.js"></script -->
+  </head>
+  <body>
+    <div id="main">
+      <h4>attrメソッドによる属性の設定と削除</h4>
+      <a id="link01" href="http://jquery.com/">jQuery</a>
+      <a id="link02" href="http://jqueryui.com/">jQuery UI</a>
+      <a id="link03" href="http://jquery.com/">jQuery(DOM API)</a>
+    </div>
+    <script>// <![CDATA[
+      (function($) {
+        // attrメソッドによる属性の値の取得
+        // (最初に指定された要素の属性を取得)
+        alert($('a').attr('id'));   // link01
+
+        // attrメソッドによる属性の設定(1)
+        $('a').attr('target', '_top');
+
+        // attrメソッドによる属性の設定(2)
+        $('a').attr({ title: 'ジャンプ', target: '_blank' });
+
+        // attrメソッドによる属性の設定(3)
+        $('a').attr('title', function(idx, value) {
+          return (idx + 1) + '. ' + this.textContent +
+                 'のWebサイト(' + this.href + ')に' + value;
+        });
+
+        // removeAttrメソッドによる属性の削除(4)
+        $('a').removeAttr('target');
+
+        // DOM APIによる属性の設定(比較用)
+        var link03 = document.getElementById('link03');
+        link03.title  = 'jQueryのWebサイトへ';
+        link03.target = '_blank';
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>

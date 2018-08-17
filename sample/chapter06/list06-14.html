@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>bindによるイベント処理の登録</title>
+    <style>
+      #square { width: 100px;  height: 100px;
+                margin-bottom: 5px;  padding: 5px;  border: 1px solid black; }
+      .hover { background-color: lightgray; }
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div id="square"></div>
+    <div>
+      <a id="anchor" href="http://jquery.com/">jQuery</a>
+      <input id="btn" type="button" value="unbind" />
+    </div>
+    <script>// <![CDATA[
+      // 登録されるイベント処理
+      var handleHover = function() { $(this).toggleClass('hover'); };
+      var handleText = function(v) {
+        return function() { $(this).text(v || ''); };
+      };
+
+      // それぞれのイベントに対応した処理を1つずつ登録する場合
+      $('#square').bind('mousedown', handleText('mousedown'))
+                  .bind('mouseup', handleText('mouseup'));
+      // 複数のイベントに対応する処理をまとめて登録する場合
+      $('#square').bind({ mousedown: handleText('mousedown'), mouseup: handleText('mouseup') });
+      // 複数のイベントで同じ処理を登録する場合
+      $('#square').bind('mouseover mouseout', handleHover);
+
+      // return false; のイベント処理を登録する場合
+      $('#anchor').bind('click', false);
+
+      // 登録したイベント処理を削除
+      $('#btn').bind('click', function() {
+        $('#square').unbind('mousedown mouseup mouseover mouseout');
+        $('#anchor').unbind('click');
+      });
+    // ]]></script>
+  </body>
+</html>

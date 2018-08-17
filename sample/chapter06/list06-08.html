@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>change/select/submitのイベント処理</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <form>
+      <fieldset>
+        <legend>Web関連技術</legend>
+        <input id="tech-h" name="tech" type="radio" value="HTML" />
+        <label for="tech-h">HTML</label>
+        <input id="tech-c" name="tech" type="radio" value="CSS" />
+        <label for="tech-c">CSS</label>
+        <input id="tech-j" name="tech" type="radio" value="JavaScript" />
+        <label for="tech-j">JavaScript</label>
+        <input id="tech-f" name="tech" type="radio" value="Flash" />
+        <label for="tech-f">Flash</label>
+      </fieldset>
+      <fieldset>
+        <legend>jQueryについて</legend>
+        <textarea name="tech" cols="30" rows="3">jQueryはHTML文書に組み込んで利用されるJavaScriptライブラリです</textarea>
+      </fieldset>
+      <input type="submit" value="送信" />
+    </form>
+    <table>
+      <tr><td>ラジオボタンの選択(change)</td><td id="tech-r"></td></tr>
+      <tr><td>テキストの選択(select)</td><td id="tech-t" style="width: 10em;"></td></tr>
+    </table>
+    <script>// <![CDATA[
+      var techr = $('#tech-r');   // ラジオボタンの選択(change)
+      var techt = $('#tech-t');   // テキストの選択(select)
+
+      // <form onsubmit="return false;"> と同じ(フォームを送信しない)
+      $('form').submit(function() { return false; });
+
+      // ラジオボタンの選択が変更されたら
+      $('form input[type="radio"]').change(function() {
+        techr.text(this.value);    // 選択されたラジオボタンの値を表示
+      });
+
+      // テキストが選択されたら
+      $('form textarea').select(function() {
+        // 選択されたテキストの部分を表示
+        techt.text(document.selection && document.selection.createRange().text ||
+                   $(this).val().slice(this.selectionStart, this.selectionEnd));
+      });
+    // ]]></script>
+  </body>
+</html>

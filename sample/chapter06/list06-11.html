@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>スクロールと要素の位置</title>
+    <style>
+      #message { position: fixed;  left: 20px;  top: 20px;  padding: 5px;
+                 border: 1px solid black;  width: 12em; }
+      #message p { margin: 3px;  padding: 0;  white-space: nowrap; }
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div id="message">
+      <p>画面サイズ x: <span id="win-width"></span>, y: <span id="win-height"></span></p>
+      <p>スクロール x: <span id="scroll-left"></span>, y: <span id="scroll-top"></span></p>
+      <p>表示位置 x: <span id="offset-left"></span>, y: <span id="offset-top"></span></p>
+    </div>
+    <script>// <![CDATA[
+      // 値を表示するための要素
+      var win        = $(window);          // Webブラウザ画面(window)
+      var message    = $('#message');      // メッセージ
+      var winWidth   = $('#win-width');    // 画面の幅
+      var winHeight  = $('#win-height');   // 画面の高さ
+      var scrollLeft = $('#scroll-left');  // スクロールの横位置
+      var scrollTop  = $('#scroll-top');   // スクロールの縦位置
+      var offsetLeft = $('#offset-left');  // 要素の表示位置(横)
+      var offsetTop  = $('#offset-top');   // 要素の表示位置(縦)
+
+      // スクロールする画面の大きさを設定
+      $(document.body).width(win.width() * 2.5).height(win.height() * 2.5);
+
+      win.resize(function() {
+        // Webブラウザの画面が変化したときに実行されるイベントハンドラ
+        winWidth.text(win.width());    // 画面の幅(ピクセル)
+        winHeight.text(win.height());  // 画面の高さ(同上)
+      }).scroll(function() {
+        // Webブラウザの画面がスクロールしたときに実行されるイベントハンドラ
+        var offset = message.offset();
+        scrollLeft.text(win.scrollLeft());  // スクロールの横位置(ピクセル、以下同じ)
+        scrollTop.text(win.scrollTop());    // スクロールの縦位置
+        offsetLeft.text(offset.left);       // 要素の表示位置(横)
+        offsetTop.text(offset.top);         // 要素の表示位置(縦)
+      }).resize().scroll();  // 初期化
+    // ]]></script>
+  </body>
+</html>

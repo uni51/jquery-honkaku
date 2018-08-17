@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>$.proxyによるイベント処理の委譲</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <input type="button" value="カウンタ" /><span id="count"></span>
+    </div>
+    <script>// <![CDATA[
+      // カウンタオブジェクト
+      var Counter = function(initial, step) {
+        this.count = !isNaN(initial) && Number(initial) || 0;  // 初期値
+        this.step  = !isNaN(step) && Number(step) || 1;        // 増分
+      };
+
+      Counter.prototype = {  // thisはCounterインスタンスを表す
+        inc: function() { this.count += this.step; }
+      };
+
+      // カウンタの値を表示する処理(thisと引数は$.proxyにて設定)
+      var adapter = function(tag) { $(tag).text(this.count); };
+
+      // 表示に用いるCounterインスタンス
+      var counter = new Counter();
+
+      // ボタンのクリックでカウンタを増やせるようにする
+      $('input[type="button"]').on({ // inc, setはカスタムイベント
+        inc:   $.proxy(counter, 'inc'),                 // カウンタを増やす
+        set:   $.proxy(adapter, counter, $('#count')),  // カウンタの値を表示
+        click: function() {  // カスタムイベントの発火(thisはクリックされた要素)
+                 $(this).trigger('inc').trigger('set');
+               }
+      });
+
+      // カウンタの初期値を表示
+      adapter.call(counter, $('#count'));
+    // ]]></script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>イベントオブジェクトによるデータの受け渡し</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // イベント処理
+      var handler = function(ev) {
+        // イベントオブジェクトから受け渡された文字列を表示
+        $('<p>', {text: (ev.data && ev.data.name || ev.btn || ev.target.value) +
+                        'がクリックされました'}).appendTo(document.body);
+      };
+
+      // ボタンの表示
+      var form = $('<form>', {submit: false}).appendTo(document.body);
+      $.each(['left', 'middle', 'right'], function(i, name) {
+        $('<input>', {id: name, val: name, type: 'button'}).appendTo(form);
+      });
+
+      // clickイベントの発火
+      $(document).ready(function() {
+        // 引数をイベントオブジェクトのdataプロパティに受け渡し
+        $('#left').click({name: '左のボタン'}, handler).click();
+
+        // 生成したイベントオブジェクトを受け渡し
+        var ev = $.Event('click');
+        ev.btn = '中央のボタン';
+        $('#middle').click(handler).trigger(ev);
+
+        // {...}によってイベントオブジェクトを生成できる
+        $('#right').click(handler).trigger({type: 'click', btn: '右のボタン'});
+      });
+    // ]]></script>
+  </body>
+</html>

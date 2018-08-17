@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>状態を確認するstateメソッド</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      var methods = ['resolve', 'reject', 'notify'];
+
+      var handler = function(method, oldState) {  // this.state()は実行後の状態
+        $('<div>', {text: 'メソッド' + method + 'を実行 / 状態: ' +
+                     oldState + ' -> ' + this.state()}).appendTo(document.body);
+      };
+
+      $.each(methods, function(i, method) {
+        var def = $.Deferred().done(handler).fail(handler).progress(handler);
+        def[method](method, def.state());    // def.state()の値は'pending'
+      });
+    // ]]></script>
+  </body>
+</html>

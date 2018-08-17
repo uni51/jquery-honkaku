@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>関数の登録と実行(3)</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      (function($) {
+        var web = [], jslibs = [];
+
+        var callbacks = $.Callbacks();
+
+        // callbacks.add(Array.prototype.push) でも同様の結果が得られる
+        callbacks.add(function() {  // 引数を配列の要素に追加(thisは配列とする)
+          for(var i = 0; i < arguments.length; i++) this.push(arguments[i]);
+        });
+
+        // web.push('HTML')を実行
+        callbacks.fireWith(web, ['HTML']);
+        // web.push('CSS', 'JavaScript')に相当
+        callbacks.fireWith(web, ['CSS', 'JavaScript']);
+
+        // jslibs.push('jQuery')を実行
+        callbacks.fireWith(jslibs, ['jQuery']);
+        // jslibs.push('jQuery UI', 'jQuery Mobile')に相当
+        callbacks.fireWith(jslibs, ['jQuery UI', 'jQuery Mobile']);
+
+        // web    = ['HTML','CSS','JavaScript']
+        // jslibs = ['jQuery','jQuery UI','jQuery Mobile']
+
+        if (JSON && JSON.stringify) {
+          document.write('web = ', JSON.stringify(web) + '<br />');
+          document.write('jslibs = ', JSON.stringify(jslibs));
+        } else {
+          document.write('web = ', web.join(', ') + '<br />');
+          document.write('jslibs = ', jslibs.join(', '));
+        }
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>

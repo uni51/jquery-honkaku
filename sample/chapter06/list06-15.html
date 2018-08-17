@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>登録・削除に用いる名前空間</title>
+    <style>
+      h5, p { margin: 0 0 0.5em; }
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div id="content">
+      <p id="top">
+        <h5>topのボタン</h5>
+        <input id="ns1" type="button" value="ns1ボタン" />
+        <input id="ns2" type="button" value="ns2ボタン" />
+        <span id="msg-top"></span>
+      </p>
+      <p id="bottom">
+        <h5>bottomのボタン</h5>
+        <input id="ns3" type="button" value="ns3ボタン" />
+        <input id="ns4" type="button" value="ns4ボタン" />
+        <span id="msg-bottom"></span>
+      </p>
+    </div>
+    <div>
+      <h5>unbindの実行</h5>
+      <input id="unbind-top" type="button" value="topのボタン" />
+      <input id="unbind-bottom" type="button" value="bottomのボタン" /><br />
+      <input id="unbind-content" type="button" value="全ボタン" />
+      <input id="unbind-ns1" type="button" value="ns1ボタン" />
+    </div>
+    <script>// <![CDATA[
+      // メッセージの表示位置
+      var msgTop = $('#msg-top'), msgBottom = $('#msg-bottom');
+      // bind/unbindが実行されるボタン
+      var testButtons = $('#content :button');
+
+      // ボタンのクリックに対応するイベント処理
+      var bindHandler = function(msg) {
+        return function() {
+          msg.text(this.value + 'をクリック').show().delay(300).fadeOut(200);
+        }
+      };
+
+      // 名前空間を指定してunbindを実行
+      var unbindHandler = function(ns) {
+        return function() { testButtons.unbind(ns); };
+      };
+
+      // イベント処理の登録時に名前空間を設定
+      $('#ns1').bind('click.ns1.top.content', bindHandler(msgTop));
+      $('#ns2').bind('click.ns2.top.content', bindHandler(msgTop));
+      $('#ns3').bind('click.ns3.bottom.content', bindHandler(msgBottom));
+      $('#ns4').bind('click.ns4.bottom.content', bindHandler(msgBottom));
+
+      // ボタンのクリックで名前空間を指定してイベント処理を削除
+      $('#unbind-top').click(unbindHandler('.top'));
+      $('#unbind-bottom').click(unbindHandler('.bottom'));
+      $('#unbind-content').click(unbindHandler('.content'));
+      $('#unbind-ns1').click(unbindHandler('.ns1'));
+    // ]]></script>
+  </body>
+</html>

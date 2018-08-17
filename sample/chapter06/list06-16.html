@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>delegate/undelegate</title>
+    <style>
+      ul { margin: 0;  padding: 0;  float: left; }
+      li { margin: 0;  padding: 5px;  cursor: default; }
+      .hover { background-color: #ffa; }
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      var tech = ['HTML', 'CSS', 'JavaScript'];
+      var ul = $('<ul>').appendTo(document.body);
+
+      // <li>へのイベント処理の登録と削除
+      ul.delegate('li', 'mouseover mouseout', function() {
+        $(this).toggleClass('hover');
+      }).delegate('li', 'click', function() {
+        ul.undelegate('li', 'mouseover mouseout click');
+      });
+
+      // イベント処理が登録される要素を追加
+      $.each(tech, function(idx, name) {
+        $('<li>', {text: name}).appendTo(ul);
+      });
+    // ]]></script>
+  </body>
+</html>

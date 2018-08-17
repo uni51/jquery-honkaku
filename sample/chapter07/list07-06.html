@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>$.getメソッドによるコンテンツへのアクセス(Promise)</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // XML形式のコンテンツへのアクセス
+      $.get('xmlcontent.xml').done(function(data, statusText, jqXHR) {
+        // 読み込んだコンテンツからHTML要素を生成し<body>内に追加
+        var div = $('<div>').appendTo(document.body);
+        $('<h3>', {text: $('title', data).text()}).appendTo(div);
+        var ul = $('<ul>').appendTo(div);
+        $('name', data).each(function() {
+          $('<li>', {text: $(this).text()}).appendTo(ul);
+        });
+      }).done(function(data, statusText, jqXHR) {
+        $(document.body).append($('name', data).length + '件のデータがあります');
+      }).fail(function(jqXHR, statusText, error) {
+        // failはerrorのエイリアス(どちらも同じはたらきをする)
+        alert(error.message);
+      });
+
+      // JSON形式のコンテンツへのアクセス
+      $.get('jsoncontent.json', $.noop, 'json').done(function(data, statusText, jqXHR) {
+        // 読み込んだコンテンツからHTML要素を生成し<body>内に追加
+        var webtech = data.webtech;
+        var div = $('<div>').appendTo(document.body).data('webtech', webtech);
+        $('<h3>', {text: webtech.title}).appendTo(div);
+        var ul = $('<ul>').appendTo(div);
+        $.each(webtech.names, function() {
+          $('<li>', {text: String(this)}).appendTo(ul);
+        });
+      }).fail(function(jqXHR, statusText, error) {
+        // コンテンツが読み込めない場合の処理(failはerrorと同じ);
+      }).always(function(jqXHR, statusText) {
+        // alwaysはエラーの場合でも実行される
+        $(document.body).append($('div:last').data('webtech').names.length +
+                                '件のデータがあります');
+      });
+
+      // HTML形式のコンテンツにアクセスして要素を追加
+      $.get('webcontent.html', $.noop, 'html').then(function(data, statusText, jqXHR) {
+        // 読み込んだコンテンツをHTML文書に追加
+        return $(data).appendTo(document.body);
+      }).done(function(html) {  // htmlは追加した要素の親要素(<div>)
+        // pipeを経由した後はsuccess/errorではなくdone/failを実行する
+        $(document.body).append(html.find('li').length + '件のデータがあります');
+      });
+    // ]]></script>
+  </body>
+</html>

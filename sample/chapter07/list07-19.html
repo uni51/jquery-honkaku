@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Webサーバから受信したCSVデータを元に&lt;table&gt;を生成</title>
+    <script src="../lib/jquery-2.1.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // CSV形式のデータから二次元配列を生成する関数(rows[0][0] === '名称')
+      // (正規表現は"～"内のカンマや""などを考慮していない簡易版)
+      var csvConverter = function(text) {
+        var rows = [];
+        $.each(text.split(/\r?\n/), function(idx, line) {
+          var row = [];
+          if (!line.length) return;
+          $.each(line.split(/\,/), function(idx, column) {
+            row.push(column.replace(/^"?|"?$/g, ''));
+          });
+          rows.push(row);
+        });
+        return rows;
+      };
+
+      $.ajax('csvcontent.php', {
+        dataType: 'csv',
+        accepts: {
+          // dataTypeの値に対応するAcceptヘッダをWebサーバに送信
+          csv: 'application/csv, text/csv, text/comma-separated-values'
+        },
+        contents: {
+          // Webサーバからデータを受信したがdataTypeが設定されていないとき
+          // Webサーバのレスポンスヘッダに含まれるContent-Typeを元にdataTypeを設定
+          csv: /csv|comma-separated-values/
+        },
+        converters: {
+          // テキストをCSVとみなして二次元配列を生成
+          "text csv": csvConverter
+        },
+        success: function(rows) {  // rowsはcsvConverterの戻り値(二次元配列)
+          // <table>, <th>, <td>の生成と表示
+          var table = $('<table>').appendTo(document.body);
+          $.each(rows, function(rIdx, row) {
+            var tr = $('<tr>').appendTo(table);
+            $.each(row, function(cIdx, column) {
+              if (rIdx === 0) {
+                $('<th>', {text: column}).appendTo(tr);
+              } else {
+                $('<td>', {text: column,
+                           css:{textAlign: isNaN(column) ? 'left' : 'right'}})
+                  .appendTo(tr);
+              }
+            });
+          });
+        }
+      });
+    // ]]></script>
+  </body>
+</html>

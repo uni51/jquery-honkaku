@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>$(...)と$.parseHTMLとの組み合わせ</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      var s = 'jQueryの<a href="http://jquery.com/">Webサイト</a>へどうぞ';
+
+      try { $(s); } catch(e) { console.error(e); }  // Syntax error ...
+      // $($.parseHTML(s));  // ['jQueryの', '<a href="http://jquery.com/">Webサイト</a>', 'へどうぞ']
+
+      $($.parseHTML(s)).appendTo('body');   // <body>内にsの内容が追加される
+    // ]]></script>
+  </body>
+</html>

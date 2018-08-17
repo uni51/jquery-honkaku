@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>オリジナルのmap関数</title>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      function map(o, f) {
+        var r = [];
+        var isArray = (o.constructor === Array);
+        for(var k in o) {
+          var key = isArray ? Number(k) : k;
+          r.push(f.call(o[k], key, o[k]));
+        }
+        return r;
+      }
+
+      var a = [10, 20, 30];
+      var ra = map(a, function(idx, value) {
+        return 'a[' + idx + '] * 2 = ' + (value * 2);
+      });
+
+      var obj = {first: 10, second: 20, third: 30};
+      var ro = map(obj, function(key, value) {
+        return key + ' = ' + value;
+      });
+
+
+      document.write(ra.join(', ') + '<br />');
+      document.write(ro.join(', '));
+    // ]]></script>
+  </body>
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>色を変化させるデモプログラム</title>
+    <script src="../lib/jquery-1.11.1.js"></script>
+    <script src="../lib/jquery.easing.1.3.js"></script>
+    <script src="../lib/jquery.color-2.1.2.js"></script>
+  </head>
+  <body>
+    <div>
+      <h4>jQuery Color Pluginの機能</h4>
+      <div id="border"></div>
+      <form id="form" onsubmit="javascript:return false;"></form>
+    </div>
+    <script>// <![CDATA[
+      (function($) {
+        // 要素のスタイル(CSS)
+        $('#border').css({border: '25px solid black', marginBottom: 10});
+        // ラジオボタンの設定
+        $.each($.Color.names, function(color) {
+          if (color[0] == '_') return;
+          var label = $('<label>', {for: color, text: color}).appendTo('#form');
+          $('<input>', {type: 'radio', id: color,
+                        val: color, name: 'color', click: function() {
+            // クリックされたラジオボタンの色に変化させる
+            $('#border').animate({borderColor: $(this).val()},
+                                 {speed: 'fast', easing: 'easeOutQuad'});
+          }}).prependTo(label);
+        });
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>

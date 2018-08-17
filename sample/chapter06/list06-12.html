@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>スクロール可能な要素</title>
+    <style>
+      h4 { margin: 2em 0 1em; }
+      #scrollable { overflow: scroll; }
+      #message { position: fixed;  left: 20px;  top: 5em;  padding: 5px;
+                 border: 1px solid black;  width: 12em; }
+      #message p { margin: 3px;  padding: 0;  white-space: nowrap; }
+      #scrollable, #iframe { border: 1px dashed lightgray; }
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <h4>overflow: scroll</h4>
+    <div id="scrollable">
+      <div id="content">
+        <div id="message">
+          <p>スクロール x: <span id="scroll-left"></span>, y: <span id="scroll-top"></span></p>
+          <p>表示位置 x: <span id="offset-left"></span>, y: <span id="offset-top"></span></p>
+        </div>
+      </div>
+    </div>
+    <h4>&lt;iframe&gt;</h4>
+    <iframe id="iframe" src="test.html"></iframe>
+    <script>// <![CDATA[
+      var win        = $(window);
+      var message    = $('#message');
+      var scrollLeft = $('#scroll-left');
+      var scrollTop  = $('#scroll-top');
+      var offsetLeft = $('#offset-left');
+      var offsetTop  = $('#offset-top');
+
+      // ウィンドウの大きさに応じて要素のサイズを設定
+      win.resize(function() {
+        $('#scrollable, #iframe').width(win.width() * 0.9).height(win.height() / 3);
+        $('#content').width(win.width() * 3).height(win.height() * 3);
+      }).resize();
+
+      // overflow: scrollの要素によるスクロール
+      $('#scrollable').scroll(function() {
+        // スクロールの位置と要素の表示位置を表示
+        var offset = message.offset();
+        scrollLeft.text($(this).scrollLeft());
+        scrollTop.text($(this).scrollTop());
+        offsetLeft.text(offset.left);
+        offsetTop.text(offset.top);
+      }).scroll();
+
+      $(document.getElementById('iframe').contentWindow).scroll(function() {
+        var doc = this.document;
+        if (!doc) return;
+        var offset = $('#message', doc).offset();
+        if (!offset) return;
+        // スクロールの位置と要素の表示位置を表示(<iframe内>)
+        $('#scroll-left', doc).text($(this).scrollLeft());
+        $('#scroll-top', doc).text($(this).scrollTop());
+        $('#offset-left', doc).text(offset.left);
+        $('#offset-top', doc).text(offset.top);
+      });
+    // ]]></script>
+  </body>
+</html>

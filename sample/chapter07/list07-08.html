@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>$.getメソッドによるコンテンツへのアクセス(コールバック関数)</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+    <script>// <![CDATA[
+      // JSONPによって実行される関数
+      function calc(data) {
+        var t = data.a + ' + ' + data.b + ' = ' + (data.a + data.b);
+        $('<div>', {text: t}).appendTo(document.body);
+      }
+
+      jQuery(function($) {
+        // JSON形式のコンテンツを読み込み
+        $.get('jsoncontent.json', function(data, statusText, jqXHR) {
+          var webtech = data.webtech;
+          var div = $('<div>').data('webtech', webtech).appendTo(document.body);
+          $('<h3>', {text: webtech.title}).appendTo(div);
+          var ul = $('<ul>').appendTo(div);
+          $.each(webtech.names, function() {
+            $('<li>', {text: String(this)}).appendTo(ul);
+          });
+          $(document.body).append(webtech.names.length + '件のデータがあります');
+        }, 'json');
+
+        // JavaScriptのソースコードが実行された後にコールバック関数を実行
+        $.get('jssource.js', function(data, statusText, jqXHR) {
+          alert('JavaScriptの関数が実行されました');
+        }, 'script');
+      });
+    // ]]></script>
+  </head>
+  <body>
+    <!-- 実行結果はここに生成される -->
+  </body>
+</html>

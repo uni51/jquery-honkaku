@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>ヘッダの設定と取得</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      $.ajax({
+        url: 'customheader.php',
+        beforeSend: function(jqXHR) {
+          // 送信の直前にリクエストヘッダを追加
+          jqXHR.setRequestHeader('X-Custom-Request-Header', 'MyCustomHeader');
+        },
+        success: function(data, status, jqXHR) {
+          // レスポンスヘッダを取得して表示
+          var headerName  = 'X-Custom-Response-Header';
+          var headerValue = jqXHR.getResponseHeader(headerName);
+          $('<div>', {text: headerName + ': ' + headerValue})
+            .appendTo(document.body);
+      }});
+    // ]]></script>
+  </body>
+</html>

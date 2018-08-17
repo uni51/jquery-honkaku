@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>メソッドの実行順</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div id="red"></div>
+    <div id="blue"></div>
+    <div id="green"></div>
+    <script>// <![CDATA[
+      (function($) {
+        $('div').width(100).height(100)
+                .css({float: 'left', color: 'white', fontSize: '24pt',
+                      margin: 10, padding: 5}).text(function() {
+          $(this).css({backgroundColor: this.id});
+          return this.id.toUpperCase();
+        });
+
+        var speed = 1000;
+        $('#red').slideUp(speed).slideDown(speed)
+                 .slideUp(speed).slideDown(speed);
+        $('#blue').slideUp(speed).slideDown(speed)
+                  .slideUp(speed).slideDown(speed);
+        $('#green').slideUp(speed).slideDown(speed)
+                   .slideUp(speed).slideDown(speed);
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>

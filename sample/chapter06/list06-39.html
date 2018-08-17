@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>thenの利用例</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      var methods      = ['resolve', 'reject', 'notify'],
+          thenHandler  = function(s) { return 'then -> ' + s; },
+          stateHandler = function(s) { return s + ' / state: ' + this.state(); },
+          finHandler   = function(s) { $('<div>', {text: s}).appendTo(document.body); };
+      $.each(methods, function(i, method) {
+        var d = $.Deferred();
+
+        // resolve, reject, notifyの実行に応じて
+        // thenHandler -> stateHandler -> finHandlerの順に実行
+        d.then(thenHandler, thenHandler, thenHandler)
+         .then(stateHandler, stateHandler, stateHandler)
+         .done(finHandler).fail(finHandler).progress(finHandler);
+
+        // d.resolve('resolve'); などを実行(引数はthenで登録した関数に引継ぎ)
+        d[method](method);
+      });
+    // ]]></script>
+  </body>
+</html>

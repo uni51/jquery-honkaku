@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>特殊キーの押下を判定</title>
+    <style>
+      ul { margin: 20px 0; }
+      .keys { margin: 0 10px;  padding: 10px;  display: inline;
+              border: 5px dashed lightgray; font-size: 15pt;  font-weight: bold; }
+      .keydown { border: 5px solid red; }
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <ul></ul>
+    <script>// <![CDATA[
+      // それぞれのキーの状態を表示する要素を追加
+      var props = ['altKey', 'ctrlKey', 'metaKey', 'shiftKey'];
+
+      // キーに対応した要素を追加
+      $.each(props, function(idx, name) {
+        $('<li>', {id: name, class: 'keys', text: name}).appendTo('ul');
+      });
+
+      // イベントハンドラ
+      var handler = function(ev) {
+        if (ev.keyCode >= 16 && ev.keyCode <= 18) {  // Alt, Shift, Ctrlのいずれか
+          $.each(props, function(idx, prop) {        // が押されたときのみ処理を行う
+            // キーに対応する要素のclass属性を設定
+            $(document.getElementById(prop)).toggleClass('keydown', ev[prop]);
+          });
+        }
+        return false;  // キーに対応する動作はしない
+      };
+
+      // イベントハンドラの登録
+      $(document).keydown(handler).keyup(handler);
+    // ]]></script>
+  </body>
+</html>

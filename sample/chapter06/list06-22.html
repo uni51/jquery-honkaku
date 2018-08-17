@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>名前空間とカスタムイベントへの対応</title>
+    <style>
+      #square { width: 100px;  height: 100px;   border: 1px solid black; }
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div id="square"></div>
+    <div id="btns"></div>
+    <script>// <![CDATA[
+      var square = $('#square');
+
+      // カスタムイベントと名前空間の設定
+      square.on({
+        'paint.red':  function() { $(this).css('backgroundColor', 'red'); },
+        'paint.blue': function() { $(this).css('backgroundColor', 'blue'); },
+        'mouseout':   function() { $(this).css('backgroundColor', 'transparent'); }
+      });
+
+      $('<input>', {type: 'button', val: 'red', click: function() {
+        square.trigger('paint.red');   // カスタムイベント + 名前空間
+      }}).appendTo('#btns');
+
+      $('<input>', {type: 'button', val: 'blue', click: function() {
+        square.triggerHandler('paint.blue');    // カスタムイベント + 名前空間
+      }}).appendTo('#btns');
+
+      $('<input>', {type: 'button', val: 'mouseout', click: function() {
+        square.triggerHandler('mouseout');
+      }}).appendTo('#btns');
+    // ]]></script>
+  </body>
+</html>

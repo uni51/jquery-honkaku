@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>合否の判定(5) - エラー</title>
+    <link rel="stylesheet" type="text/css" href="../lib/qunit-1.14.0.css" media="screen" />
+    <script src="../lib/qunit-1.14.0.js"></script>
+  </head>
+  <body>
+    <div>
+      <div id="qunit"></div>
+      <div id="qunit-fixture"></div>
+    </div>
+    <script>// <![CDATA[
+      test('エラー処理', 3, function() {
+        // 実行するとエラーがスローされる関数
+        function throwError() { throw new Error('throwerror'); };
+
+        throws(throwError, 'エラーの判定処理');
+        throws(throwError, Error, 'エラーの判定処理(コンストラクタ)');
+        throws(throwError, /thr.+err/, 'エラーの判定処理(正規表現)');
+      });
+
+      test('カスタムエラー処理', 3, function() {
+        // カスタムエラー用オブジェクト
+        var CustomError = function CustomError(message) { this.message = message; };
+        CustomError.prototype.toString = function() {
+          return this.constructor.name + ': ' + this.message;
+        };
+
+        // カスタムエラーがスローされる関数
+        function throwsCustomError() { throw new CustomError('custom'); };
+
+        throws(throwsCustomError, 'カスタムエラーの判定処理');
+        throws(throwsCustomError, CustomError, 'カスタムエラーの判定処理(コンストラクタ)');
+        throws(throwsCustomError, /custom/, 'カスタムエラーの判定処理(正規表現)');
+      });
+    // ]]></script>
+  </body>
+</html>

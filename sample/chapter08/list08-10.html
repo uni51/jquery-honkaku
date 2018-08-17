@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>イベントハンドラの引数と実行順</title>
+    <link rel="stylesheet" type="text/css" href="../lib/qunit-1.14.0.css" media="screen" />
+    <script src="../lib/qunit-1.14.0.js"></script>
+  </head>
+  <body>
+    <div>
+      <div id="qunit"></div>
+      <div id="qunit-fixture"></div>
+    </div>
+    <script>// <![CDATA[
+      // オブジェクトの内容を元にログ出力用の文字列を生成
+      function obj2Log(obj) {
+        var s = '';
+
+        if (obj.message) {
+          s = obj.message + ' ';   // messageプロパティは左端に表示
+          delete obj.message;
+        }
+
+        function props2Str(obj) {  // 各プロパティから文字列を生成(再帰処理)
+          var props = [];
+          if (obj === QUnit.assert) return '{ QUnit.assert }';  // okなどのメソッド
+          for(var name in obj) {
+            var value = (typeof obj[name] === 'object') ?
+                          props2Str(obj[name]) : obj[name];
+            props.push(name + ': ' + value);
+          }
+          return '{' + props.join(', ') + '}';
+        }
+
+        return s + props2Str(obj);
+      }
+
+      // イベントハンドラの起動と引数の内容をコンソール(開発者ツール)に表示
+      QUnit.log = function(obj) {
+        // コンソール(開発者ツールなど)にログを出力
+        if (window.console) console.log(obj2Log(obj));
+      };
+
+      // ログ出力関数の設定
+      var eventLog = function(message) {
+        return function(obj) {
+          obj = obj || {};
+          obj.message = obj.message || message;  // messageプロパティの値を設定
+          QUnit.log(obj);
+        };
+      };
+
+      // イベントハンドラの設定
+      QUnit.testStart   = eventLog('    QUnit.testStart');
+      QUnit.testDone    = eventLog('    QUnit.testDone');
+      QUnit.moduleStart = eventLog('  QUnit.moduleStart');
+      QUnit.moduleDone  = eventLog('  QUnit.moduleDone');
+      QUnit.begin       = eventLog('QUnit.begin');
+      QUnit.done        = eventLog('QUnit.done');
+
+      // モジュールとテストの設定
+      module('モジュール1', {
+        setup:    eventLog('    モジュール1: setup'),
+        teardown: eventLog('    モジュール1: teardown')
+      });
+
+      test('テスト1-1', function() {
+        ok(true, '      判定処理1-1-1');
+        ok(true, '      判定処理1-1-2');
+      });
+
+      test('テスト1-2', function() {
+        equal(1, 1,    '      判定処理1-2-1');
+        notEqual(1, 2, '      判定処理1-2-2');
+      });
+
+      module('モジュール2', {
+        setup:    eventLog('    モジュール2: setup'),
+        teardown: eventLog('    モジュール2: teardown')
+      });
+
+      test('テスト2-1', function() {
+        deepEqual({a: 2, b: 1}, {a: 2, b: 1},     '      判定処理2-1-1');
+        notDeepEqual({a: 2, b: 1}, {a: 1, b: 1},  '      判定処理2-1-2');
+      });
+
+      test('テスト2-2', function() {
+        notStrictEqual('1.0', 1.0, '      判定処理2-2-1');
+        throws(function() { throw '例外スロー' }, '例外スロー', '      判定処理2-2-2');
+      });
+    // ]]></script>
+  </body>
+</html>

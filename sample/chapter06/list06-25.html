@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>イベントの発火と関連する要素</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // 一覧に表示させるプロパティ
+      var props = ['target', 'currentTarget', 'relatedTarget', 'fromElement', 'toElement'];
+
+      // 要素の内容を文字列に変換
+      function toHtml(elem) {
+        if (!elem) return '---';
+        if (elem === window) return 'window';
+        else if (elem === document) return 'document';
+
+        var html;
+        if (elem && elem.tagName) html = '<' + elem.tagName.toLowerCase();
+        if (elem.attributes) {
+          var attrs = elem.attributes;
+          for(var i in attrs) {
+            var attr = attrs[i];
+            if (!attr || attr.name === 'style' || !attr.value) continue;
+            html += ' ' + attr.name + '="' + attr.value + '"';
+          }
+        }
+        if (html) html += '>';;
+        return html;
+      }
+
+      // イベントハンドラ(一覧表に要素を表示)
+      var handler = function(ev) {
+        $.each(props, function(i, prop) {
+          $(document.getElementById(prop)).text(toHtml(ev[prop]));
+        });
+      };
+
+      // ラジオボタンの設定
+      var form = $('<form>', {submit: false, css: {margin: '10px 0'}})
+                   .appendTo(document.body);
+      $.each(['over', 'out', 'move', 'down', 'up'], function(i, name) {
+        $('<input>', {type: 'radio', name: 'event', val: 'mouse' + name,
+          change: function() {  // 実行するイベント処理の切り替え
+            $('input[type="radio"]').each(function() {
+              $(document.body)[this.checked ? 'on' : 'off'](this.value, handler);
+            });
+            $('td').text('---');
+        }}).appendTo(form);
+        form.append('mouse' + name);
+      });
+      $(document).ready(function() {
+        $('input[type="radio"]').first().prop('checked', true).triggerHandler('change');
+      });
+
+      // マウスカーソルを移動させる領域
+      var parent = $('<div>', {id: 'parent', text : 'parent', width: 200, height: 200, css: {padding: 5, position: 'relative', border: '1px solid black', float: 'left'}}).appendTo(document.body);
+      var child  = $('<div>', {id: 'child', text: 'child', css: {padding: 5, position: 'relative', left: 45, top: 30, width: 100, height: 100, border: '1px dashed black'}}).appendTo(parent);
+
+      // プロパティの一覧表
+      var table = $('<table>', {css: {borderCollapse: 'collapse', margin: '10px 0', float: 'left', marginLeft: '1em'}}).appendTo(document.body);
+      $.each(props, function(i, prop) {
+        var tr = $('<tr>');
+        $('<th>', {css: {padding: 3, textAlign: 'left'}, text: prop}).appendTo(tr);
+        $('<td>', {id: prop, css: {padding: 3, whiteSpace: 'nowrap'}}).appendTo(tr);
+        table.append(tr);
+      });
+    // ]]></script>
+  </body>
+</html>

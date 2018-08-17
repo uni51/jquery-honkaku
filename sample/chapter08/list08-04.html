@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>合否の判定(2) - オブジェクトと配列</title>
+    <link rel="stylesheet" type="text/css" href="../lib/qunit-1.14.0.css" media="screen" />
+    <script src="../lib/qunit-1.14.0.js"></script>
+  </head>
+  <body>
+    <div>
+      <div id="qunit"></div>
+      <div id="qunit-fixture"></div>
+    </div>
+    <script>// <![CDATA[
+      test('合否の判定(2)', function() {
+        // オブジェクトの判定処理
+          // すべてのプロパティが同じ
+        deepEqual({a: 2, b: 3}, {a: 2, b: 3},
+                  '{a: 2, b: 3} deepEqual {a: 2, b: 3}');
+          // プロパティが異なる
+        notDeepEqual({a: '2', b: 3}, {a: 2, b: 3},
+                     "{a: '2', b: 3} notDeepEqual {a: 2, b: 3}");
+        notDeepEqual({a: 2, b: 3}, {c: 2, b: 3},
+                     '{a: 2, b: 3} notDeepEqual {c: 2, b: 3}');
+          // 一部のプロパティが異なる
+        notDeepEqual({a: 2, b:{c: 3, d: 5}}, {a: 2, b:{b: 3, c: 5}},
+                     '{a: 2, b:{c: 3, d: 5}} notDeepEqual {a: 2, b:{b: 3, c: 5}}');
+
+        // 配列の判定処理
+          // すべての要素が同じ
+        deepEqual([2, 3], [2, 3],
+                  '[2, 3] deepEqual [2, 3]');
+          // 一部の要素が異なる
+        notDeepEqual([2, '3'], [2, 3],
+                    "[2, '3'] notDeepEqual [2, 3]");
+        notDeepEqual([2, 5], [2, 3],
+                    '[2, 5] notDeepEqual [2, 3]');
+          // 配列の構造が異なる
+        notDeepEqual([[2, 3], 2], [2, [3, 2]],
+                     '[[2, 3], 2] notDeepEqual [2, [3, 2]]');
+      });
+    // ]]></script>
+  </body>
+</html>

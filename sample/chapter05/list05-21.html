@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>thisの設定とfalseの処理も行うeach関数</title>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // 改良したオリジナルのeach関数
+      function each(o, f) {
+        var isArray = (o.constructor === Array);
+        for(var k in o) {
+          var key = isArray ? Number(k) : k;    // oが配列ならkを数値にキャスト
+          if (false === f.call(o[key], key, o[key])) break;  // thisの設定とfalseの処理
+        }
+      }
+
+      // each関数の実行
+      var tfa = [true, false, true];
+      each(tfa, function(idx, value) {
+        document.write('tfa[' + idx + '] = ' + this + '<br />');  // thisは各要素のオブジェクト
+        return value;
+      });
+
+      var tfo = {first: true, second: false, third: true};
+      each(tfo, function(key, value) {
+        document.write(key + ' = ' + this + '<br />');   // thisはプロパティ値のオブジェクト
+        return value;
+      });
+    // ]]></script>
+  </body>
+</html>

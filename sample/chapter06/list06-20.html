@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>offだけで指定できる'**'セレクタ</title>
+    <style>
+      div { cursor: default; }
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <p><span>jQuery</span>は<span>JavaScriptライブラリ</span>です</p>
+    </div>
+    <script>// <![CDATA[
+      // イベントハンドラ(マウスカーソルが重なった要素内の文字列を表示)
+      var handler = function() {
+        $('<div>', {text: $(this).text()}).appendTo(document.body);
+      };
+
+      // イベントハンドラを操作するボタンの設定
+      var buttons = [
+        {val: 'on - p',      // <p>とその子孫要素にイベントハンドラを設定
+         click: function() { $('p').on('mouseenter', handler); }},
+        {val: 'on - span',   // <p>内にある<span>にのみイベントハンドラを設定
+         click: function() { $('p').on('mouseenter', 'span', handler); }},
+        {val: 'off - span',  // <p>内の子孫要素に設定されたイベントハンドラを削除
+         click: function() { $('p').off('mouseenter', '**', handler); }},
+        {val: 'off - p',     // <p>と子孫要素のイベントハンドラを削除
+         click: function() { $('p').off('mouseenter', handler); }}
+      ];
+
+      // ボタンの表示
+      $.each(buttons, function(idx, attr) {
+        $('<input>', $.extend({type: 'button'}, attr)).appendTo('div');
+      });
+    // ]]></script>
+  </body>
+</html>

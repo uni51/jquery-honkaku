@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>$.getと$.postの違い(2) - XML形式のデータを送信</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // デフォルトの送信用MIMEタイプ
+      var defaultContentType = $.ajaxSettings.contentType;
+
+      // Webサーバに送信するXML形式の文字列
+      var xml = '<?xml version="1.0"?>' +
+                  '<webtech>' +
+                  '<title>Web関連技術</title>' +
+                  '<names>' +
+                    '<name>HTML</name>' +
+                    '<name>CSS</name>' +
+                    '<name>JavaScript</name>' +
+                  '</names>' +
+                '</webtech>';
+
+      // Webサーバから文字列を送り返された後に実行する処理
+      // (HTML要素の生成)
+      var success = function(data, statusText, jqXHR) {
+        var div = $('<div>', {css: {float: 'left', marginRight: 10}}),
+            ul = $('<ul>').appendTo(div);
+        if (data && data.title && data.names && data.names.name) {
+          $('<h3>', {text: data.title}).prependTo(div);
+          $.each(data.names.name, function(idx, name) {
+            $('<li>', {text: name}).appendTo(ul);
+          });
+        } else {
+          $('<p>', {text: 'データがありません'}).appendTo(div);
+        }
+        $(document.body).append(div);
+      };
+
+      /* success関数によって生成されるHTML要素
+      <div style="float: left; margin-right: 10px">
+        <h3>Web関連技術</h3>
+        <ul>
+          <li>HTML</li>
+          <li>CSS</li>
+          <li>JavaScript</li>
+        </ul>
+      </div>
+      */
+
+      // Webサーバへの送信を行うボタンを表示
+      var div = $('<div>').appendTo(document.body);
+
+      $('<input>', {
+        type: 'button',
+        val: 'GETメソッドでXMLデータを送信',
+        click: function() {
+          $.ajaxSettings.contentType = defaultContentType;
+          $.getJSON('xmlproc.php', {xml: xml}).done(success);
+        }
+      }).appendTo(div);
+
+      $('<input>', {
+        type: 'button',
+        val: 'POSTメソッドでXMLデータを送信',
+        click: function() {
+          $.ajaxSettings.contentType = 'application/xml';
+          $.post('xmlproc.php', xml, 'json').done(success);
+        }
+      }).appendTo(div);
+    // ]]></script>
+  </body>
+</html>

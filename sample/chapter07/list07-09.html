@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>$.getJSONと$.getScript</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+    <script src="jsrender.min.js"></script>
+    <script>// <![CDATA[
+      // JSONPによって実行される関数
+      function calc(data) {
+        var t = data.a + ' + ' + data.b + ' = ' + (data.a + data.b);
+        $('<div>', {text: t}).appendTo(document.body);
+      }
+
+      jQuery(function($) {
+        // $.get(..., 'json')のかわりに$.getJSONを利用できる
+        $.getJSON('jsoncontent.json' /* , パラメータ設定可  */ , function(data, statusText, jqXHR) {
+          // JsRenderが必要
+          var html = $.templates('<dl><dt>{{:title}}</dt><dd>{{:names}}</dd></dl>')
+                      .render(data.webtech);
+          $(html).appendTo(document.body);
+        }).done(function(data, statusText, jqXHR) {
+          $(document.body).append(
+            $('dd').text().split(',').length /* 3 */ + '件のデータがあります');
+        });
+
+        // $.get(..., 'script')のかわりに$.getScriptを利用できる
+        $.getScript('jssource.js', function(data, statusText, jqXHR) {
+          $.globalEval(data);   // 再びソースコードを実行したいとき
+        }).done(function(data, statusText, jqXHR) {
+          alert('再び実行されました');
+        });
+      });
+    // ]]></script>
+  </head>
+  <body>
+    <!-- 実行結果はここに生成される -->
+  </body>
+</html>

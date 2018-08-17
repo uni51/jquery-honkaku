@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML文字列の生成処理(3)</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+    <script src="../lib/jsrender.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      (function($) {
+        // テンプレート内で実行する関数({{date: 引数}})
+        $.views.converters('date', function(d) {
+          return (d.getYear()  + 1900) + '年' +
+                 (d.getMonth() +    1) + '月' +
+                  d.getDate()          + '日';
+        });
+        // HTML文字列の生成
+        var html = $.templates('<div>今日は{{date: now}}です</div>')
+                    .render({now: new Date()});
+        // 画面に表示
+        $(html).appendTo(document.body);
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>

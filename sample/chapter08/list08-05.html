@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>合否の判定(3) - プロパティの値</title>
+    <link rel="stylesheet" type="text/css" href="../lib/qunit-1.14.0.css" media="screen" />
+    <script src="../lib/qunit-1.14.0.js"></script>
+  </head>
+  <body>
+    <div>
+      <div id="qunit"></div>
+      <div id="qunit-fixture"></div>
+    </div>
+    <script>// <![CDATA[
+      // シンプルなオブジェクト
+      var Obj1 = {v1: 'a', v2: 'b'};
+      // インスタンスを生成するオブジェクト
+      var Obj2 = function(v1, v2) { this.v1 = v1, this.v2 = v2 };
+      // プロパティを継承するオブジェクト
+      var Obj3 = function(v1) { this.v1 = v1; };
+      Obj3.prototype = new (function(v2) { this.v2 = v2 })('b');
+      // 継承したプロパティの値が異なるオブジェクト
+      var Obj4 = function(v1) { this.v1 = v1; };
+      Obj4.prototype = new (function(v2) { this.v2 = v2 })('c');
+
+      // 以下の判定処理はすべて合格
+      test('プロパティの同値を判定', 3, function() {
+        propEqual(new Obj2('a', 'b'), Obj1,
+                  'インスタンスで定義されたプロパティがすべて同値');
+        propEqual(new Obj4('a'), new Obj3('a'),
+                  'v1のみを比較するため、prototypeによる継承関係は影響しない');
+        notPropEqual(new Obj3('a'), Obj1,
+                  'インスタンスで定義されているプロパティが異なる');
+      });
+    // ]]></script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>メソッドによるイベントの発火</title>
+    <style>
+      p { margin: 3px;  padding: 5px; }
+      p.swap, a.swap { background-color: #ffe4c4; }
+      a { margin: 3px;  padding: 5px; }
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <input id="left"  type="button" value="左ボタン" />
+      <input id="right" type="button" value="右ボタン" />
+      <a id="swap" href="#">逆転</a>
+    </div>
+    <script>// <![CDATA[
+      // 操作する要素(ボタンとリンク)
+      var swap = $('#swap'),
+          btns = $('input[type="button"]');
+
+      // ボタンがクリックされたときの処理
+      btns.click(function() {
+        // 逆転モードonのとき
+        if(swap.hasClass('swap') && !btns.hasClass('clicked')) {
+          // 逆転中を別のボタンのclass属性で明示し、そちらをクリック
+          btns.not(this).addClass('clicked').click();
+          return;
+        }
+        // クリックされたボタンを示すメッセージを表示
+        var p = $('<p>', {text: $(this).val() + 'がクリックされました'})
+                  .appendTo('div');
+        // 逆転中のとき
+        if ($(this).hasClass('clicked')) {
+          p.addClass('swap');              // 逆転中を<p>のclass属性で明示
+          $(this).removeClass('clicked');  // 逆転中を終了
+        }
+      });
+
+      // リンクがクリックされたときの処理
+      swap.click(function() {
+        $(this).toggleClass('swap');  // 逆転モードのon/offを切替
+        return false;                 // リンク先に遷移しない
+      });
+    // ]]></script>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>jQueryとソースコードが組み込まれたHTML文書の例</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>  <!-- jQuery(V.E.Rはバージョン) -->
+    <script src="myscript.js"></script>          <!-- ソースコードの組み込み① -->
+    <script>// <![CDATA[
+      // ソースコードの組み込み②
+      jQuery(function($) {
+        $('<span>', {text: 'jQueryが組み込まれたHTML文書'}).appendTo('div');
+      });
+    // ]]></script>
+  </head>
+  <body>
+    <!-- Webブラウザからアクセスされると、ここに内容が追加される -->
+  </body>
+</html>

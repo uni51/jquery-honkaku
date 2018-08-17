@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>jQueryオブジェクトを$とは別の変数で代替</title>
+    <script>// <![CDATA[
+      window.$ = function(msg) {  // $にjQueryとは異なる処理を定義
+        alert(msg);
+      };
+    // ]]></script>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+    <script>// <![CDATA[
+      var jq = jQuery.noConflict();  // jQueryを$ではない変数jqで表す
+      jq(function() {
+        jq('body').append('<h2>$jはjQueryを表す</h2>');  // jqがjQueryを表す
+        $('$はjQueryだけのものじゃない!!');   // $はjQueryよりも前に定義した関数
+      });
+    // ]]></script>
+  </head>
+  <body>
+  </body>
+</html>

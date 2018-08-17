@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>関数の登録と実行(1)</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      var fn = function() {  // 登録する関数(文字列化した引数をすべて結合して表示)
+        var s = $.map(arguments, function(arg) { return arg.toString(); }).join();
+        $('<div>', {text: s}).appendTo(document.body);
+      };
+
+      var callbacks = $.Callbacks();                // Callbacksオブジェクトの生成
+      callbacks.add(fn);                            // コールバック関数の登録
+      callbacks.fire('HTML', 'CSS', 'JavaScript');  // 登録した関数の実行
+      callbacks.fire('jQuery', 'jQuery UI', 'jQuery Mobilie');
+    // ]]></script>
+  </body>
+</html>

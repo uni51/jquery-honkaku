@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>要素それぞれの繰り返し処理</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+    <style>
+      span.highlight {
+        background-color: #ffa;
+        color: red;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <p>さまざまなWebサイトで<strong>jQueryが活躍</strong>しています</p>
+      <p>jQuery UIはjQueryに<strong>ウィジェット</strong>などを拡張するプラグインです</p>
+    </div>
+    <script>// <![CDATA[
+      (function($) {
+        $('div p').each(function() {
+          var html = $(this).html().replace(/(jQuery(?: UI)?)/g,
+                                            "<span class=\"highlight\">$1</span>");
+          $(this).html(html);
+        });
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>

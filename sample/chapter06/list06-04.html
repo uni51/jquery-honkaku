@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>クリックとボタンのイベント処理</title>
+    <style>
+      #square   { width: 200px;  padding: 5px;  border: 1px dashed black; }
+      #square p { margin: 3px 0; }
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div id="square">
+      <h4>イベント処理を実行</h4>
+    </div>
+    <script>// <![CDATA[
+      var obj = {
+        click:     'クリック',
+        dblclick:  'ダブルクリック',
+        mousedown: 'ボタンが押',
+        mouseup:   'ボタンが放'
+      };
+
+      $.each(obj, function(key, value) {
+        // click, dblclick, mousedown, mouseupの各メソッドでイベント処理を登録
+        $('#square')[key](function() {
+          $('<p>', {text: value + 'されました'}).appendTo('#square');
+        });
+      });
+    // ]]></script>
+  </body>
+</html>

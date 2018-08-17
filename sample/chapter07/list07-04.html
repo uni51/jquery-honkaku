@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>loadメソッドによるコンテンツへのアクセス</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      var div = $('<div>', {id: 'content', text: 'コンテンツはここに表示'})
+                  .appendTo(document.body);
+      $(div).load('webcontent.html ul');
+    // ]]></script>
+  </body>
+</html>

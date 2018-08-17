@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>XDomainRequestオブジェクトによるクロスドメイン通信(IE限定)</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      if (window.XDomainRequest) {  // XDomainRequestを持つ場合
+        // XDomainRequestで通信を行うよう設定
+        $.ajaxTransport(function(options, originalOptions, jqXHR) {
+          var transport = new XDomainRequest();
+          transport.contentType = options.contentType;
+          transport.timeout = options.timeout;
+          return {
+            send: function(headers, callback) {
+              // 受信後の処理
+              transport.onload = function() {
+                var responses = {text: transport.responseText};
+                if (options.dataType === 'xml') {
+                  // XMLデータであればDOMオブジェクトを設定
+                  responses.xml = $.parseXML(responses.text);
+                }
+                callback(200, 'success', responses);
+              };
+              // エラー時の処理
+              transport.onerror = transport.ontimeout = function() {
+                var responses = {text: transport.responseText};
+                callback(400, 'error', responses);
+              };
+              // Webサーバに送信
+              transport.open(options.type, options.url);
+              transport.send(options.type === 'POST' ? options.data : null);
+            },
+            abort: function() {
+              // 通信の中止
+              transport.abort();
+            }
+          };
+        });
+      }
+
+      $.ajax('allowheaders.php', {
+        type: 'GET',
+        dataType: 'json',
+        success: function(data) {
+          $.each(data.webtech, function(idx, name) {
+            $('<div>', {text: name}).appendTo(document.body);
+          });
+        }, error: function() {
+          // ... 省略 ...
+      }});
+    // ]]></script>
+  </body>
+</html>

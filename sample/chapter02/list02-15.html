@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>propメソッドによるプロパティの設定と削除</title>
+    <style>
+      /* レイアウト用CSS(jQueryの利用には影響しない) */
+      h4 { margin: 5px 0; }
+    </style>
+    <script src="https://code.jquery.com/jquery.min.js"></script>
+    <!-- CDNに接続できないときは以下を利用してください -->
+    <!-- script src="../lib/jquery-1.11.1.min.js"></script -->
+  </head>
+  <body>
+    <div id="main">
+      <h4>propメソッドによるプロパティの設定と削除</h4>
+      <form onsubmit="return false;">
+        <select id="elem01" name="choice" size="2" multiple>
+          <option>jQuery
+          <option selected>jQuery UI
+        </select>
+        <input id="elem02" type="button" value="ボタン" disabled>
+        <br><label for="choice">チェックボックス</label>
+        <input id="elem03" type="checkbox" value="1" disabled>
+        <br><input id="elem04" type="text" value="jQuery" disabled readonly>
+        <input id="elem05" type="text" value="jQuery UI" disabled readonly>
+      </form>
+    </div>
+    <script>// <![CDATA[
+      (function($) {
+        // propメソッドによるプロパティの値の取得
+        alert($('select').prop('multiple'));    // true
+
+        // propメソッドによるプロパティの設定(値の場合)
+        $(':button').prop('disabled', false);
+
+        // propメソッドによるプロパティの設定(オブジェクトの場合)
+        $(':checkbox').prop({ disabled: false, checked: true });
+
+        // propメソッドによるプロパティの設定(関数の場合)
+        $('select option').prop('selected', function(idx, value) {
+          return !value;
+        });
+
+        // removePropメソッドによるプロパティの削除
+        $(':text').removeProp('disabled');
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>

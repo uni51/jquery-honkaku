@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>名前付きキューに登録されたアニメーションの停止</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div id="square"></div>
+    <script src="square.js"></script>
+    <script>// <![CDATA[
+      (function($) {
+        var square = $('#square');
+
+        // アニメーションの動作を名前付きキューに登録
+        // (10回分、5往復)
+        for(var i = 0; i < 10; i++) {
+          // 左右方向に往復する動作を'width'というキューに登録
+          square.animate({width: 'toggle'},
+                         {queue: 'width', duration: 'slow'});
+          // 上下方向に往復する動作を'width'というキューに登録
+          square.animate({height: 'toggle'},
+                         {queue: 'height', duration: 'slow'});
+        }
+
+        // アニメーションの動作を途中で中止されるようにする
+        setTimeout(function() {
+          square.stop('width', true);   // 左右方向の往復を停止
+        }, 4800);                       // 約8回分、4往復まで('slow'は600に相当)
+        setTimeout(function() {
+          square.stop('height', true);  // 上下方向の往復を停止
+        }, 2400);                       // 約4回分、2往復まで
+
+        // 名前付きキューに登録したアニメーションの動作を開始
+        // square.dequeue(); では動作を開始できない
+        square.dequeue('width').dequeue('height');
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>

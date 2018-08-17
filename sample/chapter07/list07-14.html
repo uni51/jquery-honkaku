@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>$.ajaxによるGETとPOST</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // GETメソッドで送信するデータ(JSON)
+      var obj = {name: 'jQuery'};
+
+      // POSTメソッドで送信するデータ(XML)
+      var xml = '<?xml version="1.0"?>' +
+                  '<webtech>' +
+                  '<title>Web関連技術</title>' +
+                  '<names>' +
+                    '<name>HTML</name>' +
+                    '<name>CSS</name>' +
+                    '<name>JavaScript</name>' +
+                  '</names>' +
+                '</webtech>';
+
+      // POSTメソッドで送信した後、受信したデータを元に行う処理
+      // (HTML要素の生成)
+      var success = function(data, statusText, jqXHR) {
+        var div = $('<div>', {css: {float: 'left', marginRight: 10}}),
+            ul = $('<ul>').appendTo(div);
+        if (data && data.title && data.names && data.names.name) {
+          $('<h3>', {text: data.title}).prependTo(div);
+          $.each(data.names.name, function(idx, name) {
+            $('<li>', {text: name}).appendTo(ul);
+          });
+        } else {
+          $('<p>', {text: 'データがありません'}).appendTo(div);
+        }
+        $(document.body).append(div);
+      };
+
+      // それぞれのメソッドで送信する処理を起動するボタンを表示
+      var div = $('<div>').appendTo(document.body);
+
+      // GETメソッドによる送信
+      $('<input>', {
+        type: 'button',
+        val: 'JSONデータをGETメソッドで送信',
+        click: function() {
+          // $.get('mycontent.php', obj, 'json').done(...);
+          $.ajax({type: 'GET', url: 'mycontent.php',
+                  data: obj, dataType: 'json'}).done(function(data, statusText, jqXHR) {
+            $('<p>', {text: data.method + 'メソッドで' + data.name + 'が送信されました'}).appendTo(div);
+          });
+      }}).appendTo(div);
+
+      // POSTメソッドによる送信
+      $('<input>', {
+        type: 'button',
+        val: 'POSTメソッドでXMLデータを送信',
+        click: function() {
+          // $.ajaxSettings.contentType = 'application/xml';
+          // $.post('xmlproc.php', xml, 'json').done(success);
+          $.ajax({
+            type: 'POST', url: 'xmlproc.php', data: xml,
+            contentType: 'application/xml', dataType: 'json'
+          }).done(success);
+        }
+      }).appendTo(div);
+    // ]]></script>
+  </body>
+</html>

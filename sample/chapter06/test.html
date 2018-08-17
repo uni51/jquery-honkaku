@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>スクロール可能な要素(iframe)</title>
+    <style>
+      #message { position: fixed;  left: 20px;  top: 20px;  padding: 5px;
+                 border: 1px solid black;  width: 12em; }
+      #message p { margin: 3px;  padding: 0;  white-space: nowrap; }
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div id="message">
+      <p>スクロール x: <span id="scroll-left"></span>, y: <span id="scroll-top"></span></p>
+      <p>表示位置 x: <span id="offset-left"></span>, y: <span id="offset-top"></span></p>
+    </div>
+    <script>// <![CDATA[
+      $(document.body).width($(window).width() * 3).height($(window).height() * 3);
+    // ]]></script>
+  </body>
+</html>

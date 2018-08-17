@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>イベントの発火順とキーコード</title>
+    <style>
+      .log { margin-top: 0;  border: none; }
+      .log h4 { margin: 0 0 5px; }
+      .log p { margin: 3px; }
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <input type="text" size="10" />
+      <input type="checkbox" />return false;
+      <input type="button" value="クリア" />
+    </div>
+    <div class="log">
+      <h3>実行されたイベント処理</h3>
+    </div>
+    <script>// <![CDATA[
+      // 実行されるイベント処理(イベントハンドラ)
+      var text = $('input[type="text"]');
+      var checkbox = $('input[type="checkbox"]');
+      var button = $('input[type="button"]');
+      var log = $('.log');
+
+      var handler = function(ev) {  // evはイベントオブジェクト
+        // charCodeは可能な限り文字に変換
+        var charCode = ev.charCode > 20 ? String.fromCharCode(ev.charCode) :
+                                          ev.charCode;
+        // 発火されたイベント、キーコード、文字コードを表示
+        $('<p>', {text: ev.type + ': keyCode = ' + ev.keyCode +
+                        ', charCode = ' + charCode}).appendTo(log);
+        // チェックボックスの状態で戻り値を決定
+        return !checkbox.prop('checked');
+      };
+
+      // <input type="text">でのテキスト入力時のみイベントハンドラを実行
+      text.keydown(handler).keypress(handler).keyup(handler);
+
+      // <input type="checkbox" />の値が変化したら
+      checkbox.change(function() {
+        text.focus();  // フォーカスを<input type="text">に戻す
+      });
+
+      // 「クリア」ボタンがクリックされたら
+      button.click(function() {
+        log.find('p').remove();  // イベントの表示をクリア
+        text.val('').focus();  // フィールドもクリア
+      }).click();  // 最初にクリアしておき、フォーカスを<input type="text">に当てる
+    // ]]></script>
+  </body>
+</html>

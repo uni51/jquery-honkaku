@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>serializeArray, serializeメソッドによるパラメータの生成</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <h3>商品の詳細</h3>
+      <p>フルーツゼリー 詰め合わせ</p>
+    </div>
+    <form>
+      <fieldset>
+        <legend>種類</legend>
+        <input name="fruit" type="checkbox" value="orange" />オレンジ
+        <input name="fruit" type="checkbox" value="grape" />ぶどう
+        <input name="fruit" type="checkbox" value="melon" />メロン
+      </fieldset>
+      <fieldset>
+        <legend>セット</legend>
+        <input name="box" type="radio" value="6" />6個入り
+        <input name="box" type="radio" value="12" />12個入り
+        <input name="box" type="radio" value="24" />24個入り
+      </fieldset>
+      <fieldset>
+        <legend>個数</legend>
+        <select name="volume">
+          <option value="1" selcted="selected">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </fieldset>
+      <fieldset>
+        <legend>コメント</legend>
+        <textarea name="comment"></textarea>
+      </fieldset>
+      <fieldset>
+        <legend>ご送付先</legend>
+        <input name="address" size="50" disabled="disabled" />
+      </fieldset>
+      <input name="id" type="hidden" value="115" />
+      <input type="submit" value="注文する" />
+      <input type="reset" value="クリア" />
+    </form>
+    <script>// <![CDATA[
+      $('form').submit(function() {
+        // 「注文する」がクリックされたらメソッドの実行結果を表示する
+        var obj = $('form').serializeArray();
+        $('<p>', {html: '<strong>serializeArray</strong><br />' + JSON.stringify(obj)})
+          .appendTo(document.body);
+        $('<p>', {html: '<strong>serialize</strong><br />' + $('form').serialize()})
+          .appendTo(document.body);
+        return false;
+      }).on('reset', function() {
+        // 「クリア」がクリックされたら追加した<p>を削除
+        $('p:not(:first)').remove();
+      });
+    // ]]></script>
+  </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>バーがすべて表示されたら完了を通知</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // グラフのバーを順次伸ばしていき、すべてのバーが伸び終えたら通知する
+      var step = 36, radStep = Math.PI / step, r = 0,
+          maxWidth = $(window).width() * 0.98, maxHeight = $(window).height() * 0.9,
+          barWidth = maxWidth / step;
+
+      // グラフが描画される領域
+      var graph = $('<div>', {width: maxWidth, height: maxHeight,
+                              offset: {left: 0, top: 0}}).appendTo(document.body);
+
+      // バーのCSS設定の初期値
+      var css = {width: barWidth, bottom: 0, backgroundColor: 'gold',
+                 display: 'none', position: 'absolute'};
+
+      // グラフ内にバーを描画
+      while(step--) {
+        var height = Math.sin(r) * maxHeight;
+        $('<div>', {css: $.extend({height: height,
+                    right: (step + 1) * barWidth }, css), class: 'bar'})
+          .appendTo(graph);
+        r += radStep;
+      }
+
+      // グラフのバーを順次表示し、完了したら通知
+      $('.bar').each(function() {
+        $(this).delay(Math.random() * 1000).slideDown(300);
+      }).promise().done(function() {  // thisはjQueryオブジェクト
+        alert(this.length + 'のバーでグラフを描画しました');
+      });
+    // ]]></script>
+  </body>
+</html>

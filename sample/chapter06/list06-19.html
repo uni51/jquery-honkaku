@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>on/offによるメソッドの統一</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <a href="http://jquery.com/">jQuery</a>
+      <form><table></table></form>
+    </div>
+    <script>// <![CDATA[
+      // イベントハンドラ
+      var handler = function() {
+        return confirm($(this).text() + '(' + this.href + ')に移動しますか?');
+      };
+
+      // ラジオボタンの選択により実行されるメソッド
+      var methods = {
+        bind:       function() { $('a').bind('click', handler); },
+        unbind:     function() { $('a').unbind('click', handler); },
+        delegate:   function() { $('div').delegate('a', 'click', handler); },
+        undelegate: function() { $('div').undelegate('a', 'click'); },
+        on:         function() { $('div').on('click', 'a', handler); },
+        off:        function() { $('div').off('click', 'a', handler); },
+        'on-obj':   function() { $('a').on({click: handler}); },
+        'off-obj':  function() { $('a').off({click: handler}); }
+      }
+
+      // フォームとラジオボタンの設定
+      $('form').on('submit', false);  // bindに相当
+      $(document).on('change', 'form input[type="radio"]', function() {  // $(document)はまだ存在しない要素に登録(予約)する場合
+        methods[this.value]();
+      });
+
+      // ラジオボタン(<input type="radio">)の追加
+      var tr, form = $('form'),
+          tbody = $.support.tbody ? $('form table') :
+                                    $('<tbody>').appendTo('form table');
+      $.each(methods, function(key, value) {
+        var id = 'radio-' + key;
+        tr = tr && tr.flag ? tr : $('<tr>').appendTo(tbody);
+        var td = $('<td>').appendTo(tr);
+        $('<input>', {id: id, type: 'radio', name: 'methods', val: key}).appendTo(td);
+        $('<label>', {for: id, text: key}).appendTo(td);
+        tr.flag = !tr.flag;
+      });
+    // ]]></script>
+  </body>
+</html>

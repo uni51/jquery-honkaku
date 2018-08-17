@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>各メソッドから得られる値</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div></div>
+    <script>// <![CDATA[
+      (function($) {
+        function log(s, v) {
+          document.write(s + ' = ' + v + '<br />');
+        }
+
+        $('div').width(100).height(200);   // div { width: 100px; height: 200px } を設定
+        // padding, borderWidth, marginの順序はいずれもtop, right, bottom, left
+        $('div').css({ padding:     ' 5px 15px 25px 35px',
+                       borderWidth: ' 7px 17px 27px 37px',
+                       margin:      '10px 20px 30px 40px',
+                       borderColor: 'transparent', borderStyle: 'solid',
+                       boxSizing: 'content-box' });
+
+        log("$('div').width()", $('div').width());              // 100
+        log("$('div').height()", $('div').height());            // 200
+        log("$('div').innerWidth()", $('div').innerWidth());    // 150 (100 + 15 + 35)
+        log("$('div').innerHeight()", $('div').innerHeight());  // 230 (200 +  5 + 15)
+        log("$('div').outerWidth()", $('div').outerWidth());    // 204 (150 + 17 + 37)
+        log("$('div').outerHeight()", $('div').outerHeight());  // 264 (230 +  7 + 27)
+        log("$('div').outerWidth(true)", $('div').outerWidth(true));   // 264 (204 + 20 + 40)
+        log("$('div').outerHeight(true)", $('div').outerHeight(true));  // 304 (264 + 10 + 30)
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>

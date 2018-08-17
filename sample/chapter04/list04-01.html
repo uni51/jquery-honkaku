@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>要素の表示</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div id="very-fast"></div>
+    <div id="fast"></div>
+    <div id="default"></div>
+    <div id="slow"></div>
+    <div id="very-slow"></div>
+    <script>// <![CDATA[
+      (function($) {
+        $('div').css({float: 'left', margin: 10, padding: 5, fontSize: '25pt',
+                      backgroundColor: 'green', color: 'white'})
+                .width(100).height(100).text(function(idx) {
+          return this.id.replace('-', ' ');
+        }).hide();
+
+        // showメソッドで各要素を表示
+        $('#very-fast').show();         // すぐに表示される
+        $('#fast').show('fast');        // 'fast'は200
+        $('#default').show('default');  // 'fast'や'slow'ではないので400
+        $('#slow').show('slow');        // 'slow'は600
+        $('#very-slow').show(2000);
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>

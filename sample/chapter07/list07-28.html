@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML文字列の生成処理(2)</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+    <script src="../lib/jsrender.min.js"></script>
+    <script id="list-ul" type="text/x-jsrender">
+      <ul>{{for items}}<li>{{:name}}</li>{{/for}}</ul>
+    </script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      (function($) {
+        var html = $('#list-ul').render({items: [{name: 'jQuery'}, {name: 'HTML'}]});
+        $(html).prependTo(document.body);
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>

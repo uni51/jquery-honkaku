@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>カスタムイベント処理の引数</title>
+    <script src="../lib/jquery-1.11.1.js"></script>
+  </head>
+  <body>
+    <div id="ajax"></div>
+    <script>// <![CDATA[
+      $(document).ajaxStart(function(ev) {
+        // evはイベントオブジェクト
+        $('<p>', {text: ev.type}).appendTo('#ajax');
+      });
+
+      $(document).ajaxSend(function(ev, jqXHR, options) {
+        // optionsはAjax通信処理のオプション
+        $('<p>', {text: ev.type + ': options.dataType = ' + options.dataType})
+          .appendTo('#ajax');
+      });
+
+      $(document).ajaxSuccess(function(ev, jqXHR, options, data) {
+        // dataはWebサーバから受信したレスポンスのオブジェクト
+        $('<p>', {text: ev.type + ': JSON.stringify(data) = ' + JSON.stringify(data)})
+          .appendTo('#ajax');
+      });
+
+      $(document).ajaxError(function(ev, jqXHR, options, e) {
+        // eは例外オブジェクト
+        $('<p>', {text: ev.type + ': message = ' + (e.message || e)}).appendTo('#ajax');
+      });
+
+      $(document).ajaxComplete(function(ev, jqXHR, options) {
+        $('<p>', {text: ev.type + ': options.type = ' + options.type}).appendTo('#ajax');
+      });
+
+      $(document).ajaxStop(function(ev) {
+        $('<p>', {text: ev.type}).appendTo('#ajax');
+      });
+
+      $.getJSON('emptyobj.json');  // 通信成功
+      $.post('dummy');             // 通信失敗
+    // ]]></script>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>triggerとtriggerHandlerの違い</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div id="parent">
+      <form>
+        <input name="now" type="hidden" />
+      </form>
+    </div>
+    <div id="btns"></div>
+    <script>// <![CDATA[
+      var ary = ['フォームは送信されるかな?', '現在時刻を更新しますか?'];
+      var obj = {msg1: 'フォームは送信されるかな?', msg2: '現在時刻を更新しますか?'}
+
+      // URLに含まれるnow=...の部分を表示
+      $('<p>', {text: location.search.slice(1)}).appendTo('#parent');
+
+      // 確認ダイアログの表示
+      $('#parent').submit(function(ev, msg1, msg2) { // aryの各要素がmsg1, msg2に展開
+        return confirm(ev.msg2 || msg2);
+      });
+
+      $('form').submit(function(ev) {  // objのプロパティはevに設定済み
+        $('<p>', {text: ev.msg1}).appendTo('#parent');
+        $('form :hidden').val($.now());
+      });
+
+      // triggerを実行するボタンを生成
+      $('<input>', {type: 'button', val: 'trigger', click: function() {
+        $('form').trigger('submit', ary);
+      }}).appendTo('#btns');
+
+      // triggerHandlerを実行するボタンを生成
+      $('<input>', {type: 'button', val: 'triggerHandler', click: function() {
+        console.log($('form').triggerHandler($.extend({type: 'submit'}, obj)));
+      }}).appendTo('#btns');
+    // ]]></script>
+  </body>
+</html>

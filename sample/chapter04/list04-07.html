@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>animateメソッドとキュー</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div id="square"></div>
+    <script src="square.js"></script>
+    <script>// <![CDATA[
+      (function($) {
+/**/
+        // a. 2つのanimateメソッドを1つずつ実行
+        $('#square').animate({width: '+=50px', height: '+=50px'})
+                    .animate({fontSize: '+=25pt'});                  // 順番に実行
+/**/
+/*
+        // b. 2つのanimateメソッドをほぼ同時に実行
+        $('#square').animate({width: '+=50px', height: '+=50px'})
+                    .animate({fontSize: '+=25pt'}, {queue: false});  // 並列して実行
+*/
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>

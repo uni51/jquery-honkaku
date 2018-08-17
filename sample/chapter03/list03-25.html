@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>ユーザーから入力されたデータをそのまま表示(01)</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <form onsubmit="return false;">
+      <input type="text" />                  <!-- データ入力フォーム -->
+      <input type="button" value="表示" />   <!-- 表示ボタンをクリックすると -->
+    </form>
+    <div id="result"></div>                  <!-- フォームに入力されたデータがここに表示される -->
+    <script>// <![CDATA[
+      (function($) {
+        $('input[type="button"]').click(function() {          // ボタンがクリックされたら
+          $('#result').text($('input[type="text"]').val());   // textメソッドで表示
+        });
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>

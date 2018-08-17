@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>CSVファイルを元に&lt;table&gt;を生成</title>
+    <script src="../lib/jquery-2.1.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // CSV形式のデータから二次元配列を生成する関数(rows[0][0] === '名称')
+      // (正規表現は"～"内のカンマや""などを考慮していない簡易版)
+      var csvConverter = function(text) {
+        var rows = [];
+        $.each(text.split(/\r?\n/), function(idx, line) {
+          var row = [];
+          if (!line.length) return;
+          $.each(line.split(/\,/), function(idx, column) {
+            row.push(column.replace(/^"?|"?$/g, ''));
+          });
+          rows.push(row);
+        });
+        return rows;
+      };
+
+      // CSV形式のファイルを読み込み
+      $.ajax('csvcontent.csv', {
+        dataType: 'csv', // CSV形式のデータを受信
+        converters: {    // 変換処理の設定
+          'text csv': csvConverter  // テキストをCSV形式とみなして二次元配列を生成
+        },
+        success: function(rows) {  // rowsは生成済みの二次元配列
+          // <table>, <th>, <td>の生成と表示
+          var table = $('<table>').appendTo(document.body);
+          $.each(rows, function(rIdx, row) {
+            var tr = $('<tr>').appendTo(table);
+            $.each(row, function(cIdx, column) {
+              if (rIdx === 0) {
+                $('<th>', {text: column}).appendTo(tr);
+              } else {
+                $('<td>', {text: column,
+                           css:{textAlign: isNaN(column) ? 'left' : 'right'}})
+                  .appendTo(tr);
+              }
+            });
+          });
+        }
+      });
+    // ]]></script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>queueとdequeueによるアニメーションの実行(6)</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div id="square"></div>
+    <script src="square.js"></script>
+    <script>// <![CDATA[
+      (function($) {
+        $('#square').queue('myq', function(next) {
+          $(this).animate({height: '+=100px'});      // 先に高さを変化させる
+          next();                                    // 次を実行
+        }).queue('myq', function() {
+          $(this).animate({width: '+=100px'});       // そのあと幅を変化させる
+        });
+
+        $('#square').dequeue('myq');
+        $('#square').clearQueue('myq');
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>

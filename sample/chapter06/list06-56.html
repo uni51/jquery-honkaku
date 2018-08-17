@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Callbacksオブジェクトのフラグ</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      var fn = function(s, ret) {
+        $('<div>', {text: s}).appendTo(document.body);
+        return ret;
+      };
+
+      // デフォルトのCallbacksオブジェクト
+      var callbacks = $.Callbacks();
+      callbacks.add(fn).add(fn).fire('Web').fire('jQuery');
+      // 結果(要素は省略、以下同じ): 'Web', 'Web', 'jQuery', 'jQuery'
+
+      // once: fireは1回だけ有効
+      var onceCallbacks = $.Callbacks('once');
+      onceCallbacks.add(fn).add(fn).fire('Web').fire('jQuery');
+      // 結果: 'Web', 'Web'
+
+      // unique: 同じ関数は1回だけ登録可
+      var uniqueCallbacks = $.Callbacks('unique');
+      uniqueCallbacks.add(fn).add(fn).fire('Web').fire('jQuery');
+      // 結果: 'Web', 'jQuery'
+
+      // stopOnFalse: 戻り値がfalseならそれ以後の関数を実行しない
+      var stopOnFalseCallbacks = $.Callbacks('stopOnFalse');
+      stopOnFalseCallbacks.add(fn).add(fn).fire('Web', false).fire('jQuery');
+      // 結果: 'Web', 'jQuery', 'jQuery'
+      stopOnFalseCallbacks.fire('Web').fire('jQuery', false);
+      // 結果: 'Web', 'Web', 'jQuery'
+
+      // フラグは空白区切りで複数設定可
+      var onceMemoryCallbacks = $.Callbacks('once memory');
+      onceMemoryCallbacks.fire('jQuery').add(fn).add(fn);
+      // 結果: 'jQuery', 'jQuery'
+    // ]]></script>
+  </body>
+</html>

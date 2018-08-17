@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>オプションに設定される関数の実行順</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div id="complete"></div>
+    <div id="finish"></div>
+    <div id="stop"></div>
+    <script>// <![CDATA[
+      (function($) {
+        // 要素のCSS設定
+        $('div').css({border: '1px solid black', float: 'left',
+                      margin: 5, padding: 5}).html(function() {
+                   return '<strong>' + this.id + ' </strong>';
+                 }).hide();
+
+        function addHtml(s) {
+          return function() { $(this).append(s); };
+        }
+
+        // アニメーションのオプション(関数)
+        var opts = {
+          duration: 110,
+          start:    addHtml('<span>start </span>'),
+          step:     addHtml('<span>step </span>'),
+          progress: addHtml('<strong>progress </strong>'),
+          done:     addHtml('<strong>done </strong>'),
+          complete: addHtml('<strong>complete </strong>'),
+          fail:     addHtml('<strong>fail </strong>'),
+          always:   [addHtml('<span>always </span>'), function() {
+            $('div').find('strong:gt(0)').css('color', 'red');
+          }]
+        };
+
+        // アニメーション実行
+        $('div').slideDown(opts);
+        // 一部のアニメーションを中止
+        setTimeout(function() {
+          // 正常終了時の状態にする(done, completeが実行される)
+          $('#finish').finish();
+          // 中断(failが実行される)
+          $('#stop').stop();
+        }, 50);
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>readyと$.holdReady</title>
+    <style>
+      #caution { width: 21em;  padding: 0.3em;  border: 1px dashed red;
+                 color: red;  font-weight: bold;  font-size: 90%; }
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <p>jQuery.readyWait: <span id="ready-wait"></span> /
+         jQuery.isReady: <span id="is-ready"></span></p>
+      <input type="button" value="$.holdReady(true)" />
+      <input type="button" value="$.holdReady(false)" />
+    </div>
+    <p id="caution">jQuery.readyWait / jQuery.isReady のいずれもアプリケーションでは値を変更しないでください</p>
+    <script>// <![CDATA[
+      $(document).ready(function() {   // jQuery(function($) {...});と同じ
+        // DOMオブジェクトをが読み込まれたらここを実行
+        $('div').append('<p>ready!</p>');
+        $('input[type="button"]').prop('disabled', true);
+      });
+
+      // イベントハンドラの生成
+      var handler = function(v) {
+        return function() {  // イベントハンドラの処理
+          $.holdReady(v);
+          $('#ready-wait').text($.readyWait);
+          $('#is-ready').text($.isReady);
+        };
+      };
+
+      // それぞれのボタンにイベントハンドラを登録
+      $('input[type="button"]').last().click(handler(false));
+      $('input[type="button"]').first().click(handler(true)).click();  // $.holdReady(true)を実行しておく
+    // ]]></script>
+  </body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>オリジナルのeach, mapをObject,Arrayのメソッドに拡張</title>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // Objectにeachメソッドを拡張
+      Object.prototype.each = function(f) {
+        if (this === window) return;   // thisがwindowの場合は以下を実行しない
+        var isArray = (this.constructor === Array);
+        for(var k in this) {
+          if (isArray && isNaN(k) || this[k].constructor === Function) continue;
+          var key = isArray ? Number(k) : k;    // このオブジェクトが配列ならkを数値にキャスト
+          if (false === f.call(this[key], key, this[key])) break;  // thisの設定とfalseの処理
+        }
+      };
+
+      // Objectにmapメソッドを拡張
+      Object.prototype.map = function(f) {
+        if (this === window) return;
+        var r = [];
+        var isArray = (this.constructor === Array);
+        for(var k in this) {
+          if (isArray && isNaN(k) || this[k].constructor === Function) continue;
+          var key = isArray ? Number(k) : k;
+          r.push(f.call(this[k], key, this[k]));
+        }
+        return r;
+      };
+
+      var a = [10, 20, 30];
+      var obj = {first: 10, second: 20, third: 30};
+
+      // 拡張されたeachメソッドを実行
+      a.each(function(idx, value) {
+        document.write('a[' + idx + '] = ' + value + '<br />');
+      });
+
+      obj.each(function(key, value) {
+        document.write(key + ' = ' + value + '<br />');
+      });
+
+      // 拡張されたmapメソッドを実行
+      var ra = a.map(function(idx, value) {
+        return 'a[' + idx + '] * 2 = ' + (value * 2);
+      });
+
+      var ro = obj.map(function(key, value) {
+        return key + ' = ' + value;
+      });
+
+
+      document.write(ra.join(', ') + '<br />');
+      document.write(ro.join(', '));
+    // ]]></script>
+  </body>
+</html>

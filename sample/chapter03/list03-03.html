@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML形式の文字列から要素を生成する関数とその実行例</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // 文字列のHTMLからDOMオブジェクト(DocumentFragment)を生成する関数
+      function htmlToDOM( html, undefined ) {
+        var div, fragment;
+        try {
+          // RangeオブジェクトのcreateContextualFragmentメソッドで
+          // DocumentFragmentオブジェクトを生成
+          var range = document.createRange();
+          fragment = range.createContextualFragment(html);
+        } catch(e) {
+          // RangeオブジェクトのcreateContextualFragmentメソッドを
+          // 実行できない場合はinnerHTMLを用いる
+          try {
+            // 要素生成用の<div>(HTML文書には追加しない)
+            div = document.createElement('div');
+            div.innerHTML = html;
+            fragment = document.createDocumentFragment();
+            for (var i in div.childNodes)  {
+              if (isNaN(i)) break;
+              // <div>の子孫要素をコピーしてDocumentFragmentオブジェクトに追加
+              fragment.appendChild(div.childNodes[i].cloneNode(true));
+            };
+          } catch(e) {
+            fragment = undefined;
+          }
+        }
+        div = null;
+        return fragment;
+      }
+
+      // htmlToDOM関数の実行例
+      var html = '<a href="http://jquery.com/">jQuery</a> ' +
+                 '<a href="http://jqueryui.com/">jQuery UI</a>';
+      document.body.appendChild( htmlToDOM( html ) );
+    // ]]></script>
+  </body>
+</html>

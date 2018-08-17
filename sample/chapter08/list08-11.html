@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>オプションを設定してテスト実行</title>
+    <link rel="stylesheet" type="text/css" href="../lib/qunit-1.14.0.css" media="screen" />
+    <script src="../lib/qunit-1.14.0.js"></script>
+  </head>
+  <body>
+    <div>
+      <div id="qunit"></div>
+      <div id="qunit-fixture"></div>
+    </div>
+    <script>// <![CDATA[
+      // noglobalsによる影響なし
+      test('ローカル変数の設定', function() {
+        var v = true;
+        ok(v, 'ローカル変数による判定');
+      });
+
+      // noglobalsにチェックが入るとテスト未完
+      test('グローバル変数の設定', function() {
+        v = true;  // グローバル変数の設定
+        ok(v, 'グローバル変数による判定');
+      });
+
+      // noglobalsにチェックが入るとテスト未完
+      test('グローバル変数の削除', function() {
+        delete v;  // グローバル変数の削除
+        ok(true, 'グローバル変数による判定');
+      });
+
+      // notrycatchにチェックが入るとテストプログラムが中止される
+      test('エラー処理', function() {
+        throws(function() { return v; }, 'エラー発生');   // vは削除済み
+        ok(v, 'vは削除されているので実行できない');
+      });
+    // ]]></script>
+  </body>
+</html>

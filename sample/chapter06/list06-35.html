@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>処理中のthisの値を設定する</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      var calc1 = { plus:  function(a, b) { return a + b; } },
+          calc2 = { minus: function(a, b) { return a - b; } },
+          calc3 = { multi: function(a, b) { return a * b; } };
+
+      $.Deferred().resolveWith(calc1, [5, 3]).done(function(a, b) {  // a = 5, b = 3 
+        alert(this.plus(a, b));  // thisはcalc1オブジェクト 
+      }); 
+
+      $.Deferred().fail(function(a, b) {  // a = 5, b = 3 
+        alert(this.minus(a, b));  // thisはcalc2オブジェクト 
+      }).rejectWith(calc2, [5, 3]);
+
+      $.Deferred().notifyWith(calc3, [5, 3]).progress(function(a, b) {
+        alert(this.multi(a, b));  // [5, 3], [2, 7]の2回実行される
+      }).notifyWith(calc3, [2, 7]);
+    // ]]></script>
+  </body>
+</html>

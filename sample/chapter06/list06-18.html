@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>$(...)によるイベント処理の設定</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      (function($) {
+        // HTMLの追加とイベント処理の登録を同時に行う
+        $('<div>選択された値: <span id="val"></span></div>').appendTo(document.body);
+        var tech = ['HTML', 'CSS', 'JavaScript'];
+        var select = $('<select>', {
+          html:   $.map($.merge(['Web関連技術'], tech),
+                        function(name) { return '<option>' + name + '</option>'; })
+                   .join(''),
+          change: function() { $('#val').text($(this).val()); },
+        }).prependTo('div');
+
+        // 複数のイベント処理を同時に登録
+        $('<a>', {
+          href:  'http://jquery.com/',
+          text:  'jQuery',
+          title: 'jQueryのWebサイトへ',
+          click: false,  // function() { return false; }
+          focus: function() { $(this).css('fontWeight', 'bold'); },
+          blur:  function() { $(this).css('fontWeight', 'normal'); }
+        }).appendTo(document.body);
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>

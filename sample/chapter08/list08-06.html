@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>合否の判定(4) - 日付(Date)、正規表現(RegExp)、DOMオブジェクト</title>
+    <link rel="stylesheet" type="text/css" href="../lib/qunit-1.14.0.css" media="screen" />
+    <script src="../lib/qunit-1.14.0.js"></script>
+  </head>
+  <body>
+    <div>
+      <div id="qunit"></div>
+      <div id="qunit-fixture"></div>
+    </div>
+    <script>// <![CDATA[
+      // テスト対象の関数
+      function getToday() { // その日の0時に設定
+        var d = new Date();
+        d.setTime(d.getTime() - d.getTime() % (86400 * 1000));
+        return d
+      }
+
+      // テスト
+      test('合否の判定(3)', function() {
+        // 日付
+        notEqual(getToday(), getToday(), 'getToday() notEqual getToday()');
+        deepEqual(getToday(), getToday(), 'getToday() deepEqual getToday()');
+
+        // 正規表現
+        deepEqual(new RegExp('jQuery'), /jQuery/,
+                  "new RegExp('jQuery') deepEqual /jQuery/");
+        notDeepEqual(/jQuery/ig, /jQuery/gm, '/jQuery/ig notDeepEqual /jQuery/gm');
+        notDeepEqual(/jQuery UI/, /jQuery/, '/jQuery UI/ notDeepEqual /jQuery/');
+
+        // DOMオブジェクト
+        deepEqual(document.getElementsByTagName('body')[0], document.body,
+                  "document.getElementsByTagName('body')[0] deepEqual document.body");
+        notDeepEqual(document.getElementsByTagName('html')[0], document.body,
+                  "document.getElementsByTagName('html')[0] notDeepEqual document.body");
+      });
+    // ]]></script>
+  </body>
+</html>

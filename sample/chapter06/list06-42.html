@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>カウンタウィジェット</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // ボタンとカウンタの値を表示する要素を持つカウンタウィジェット
+      var CounterWidget = function(id, btnVal, initial, step) {
+        // ウィジェットの初期値を設定
+        this.id = id || 'counter';
+        this.btnVal = btnVal || 'カウンタ';
+        this.count = !isNaN(initial) && Number(initial) || 0;
+        this.step  = !isNaN(step) && Number(step) || 1;
+
+        // HTMLの生成
+        this.html = '<div id="' + id + '" class="counter-widget">' +
+                    '<input type="button" value="' + btnVal + '" />' +
+                    '<span></span>' +
+                    '</div>';
+      };
+
+      CounterWidget.prototype = {
+        inc: function() {             // カウンタの加算
+          this.count += this.step;
+        },
+        set: function(tag) {          // カウンタの値を表示
+          tag.text(this.count);       // tagはウィジェット内の<span>
+        },
+        click: function() {           // ボタンクリック時のイベント処理
+          this.inc();  this.set(this.tag);
+        },
+        appendTo: function(toElem) {  // ウィジェットのHTML文書への追加
+          this.root = $(this.html).appendTo(toElem);
+          $(this.root).on('click', 'input[type="button"]', $.proxy(this, 'click'));
+          this.tag = this.root.find('span');
+          this.tag.promise().done($.proxy(this, 'set'));  // カウンタの初期値を表示
+          return this;
+        },
+        remove: function() {
+          $(this.root).off('click', 'input[type="button"]');
+          $(this.root).remove();
+        }
+      };
+
+      new CounterWidget('counter1', '増えるカウンタ').appendTo(document.body);
+      new CounterWidget('counter2', '減るカウンタ', 0, -1).appendTo(document.body);
+    // ]]></script>
+  </body>
+</html>

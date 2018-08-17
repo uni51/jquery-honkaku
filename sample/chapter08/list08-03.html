@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>合否の判定(1) - 真偽(Boolean)、等値(==)、同値(===)</title>
+    <link rel="stylesheet" type="text/css" href="../lib/qunit-1.14.0.css" media="screen" />
+    <script src="../lib/qunit-1.14.0.js"></script>
+  </head>
+  <body>
+    <div>
+      <div id="qunit"></div>
+      <div id="qunit-fixture"></div>
+    </div>
+    <script>// <![CDATA[
+      // テスト対象の処理
+      function isOdd(num) { return num % 2; }   // numが奇数ならtrue
+      function plus(a, b) { return a + b; }         // a + bの計算
+
+      // 2つの関数を用いたテスト
+      test('合否の判定(1)', function() {
+        // isOdd, plusの判定処理
+        ok(isOdd(5), '5は奇数である');                     // 1. 合格
+        equal(plus(2, 3), '5', '2 + 3 == "5"');            // 2. 合格
+        notEqual(plus(2, 3), '5', '2 + 3 != "5"');         // 3. 不合格
+        strictEqual(plus(2, 3), '5', '2 + 3 === "5"');     // 4. 不合格
+        notStrictEqual(plus(2, 3), '5', '2 + 3 !== "5"');  // 5. 合格
+      });
+    // ]]></script>
+  </body>
+</html>

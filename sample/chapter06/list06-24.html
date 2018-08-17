@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>マウスカーソルの位置を表すプロパティ</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      var width = $(window).width(), height = $(window).height();
+      var scrollable = $('<div>', {offset:{left: 0, top: 0},
+                                   width: width * 3, height: height * 3})
+                         .appendTo(document.body);
+      var table = $('<table>').css({borderCollapse: 'collapse',
+                                    position: 'fixed', bottom: 10, right: 10})
+                              .html('<caption>マウスカーソルの位置</caption>')
+                              .prependTo(scrollable);
+
+      // プロパティの一覧表を作成
+      var props  = ['page', 'client', 'offset', 'screen', 'layer'];
+      var axises = ['x', 'y'];
+      var css = { border: '1px solid black', padding: 5 };
+      $.each(props, function(i, prop) {
+        var tr = $('<tr>');
+        $.each(axises, function(j, axis) {
+          var id = prop + '-' + axis;
+          $('<th>', {text: prop + axis.toUpperCase(), css: $.extend({}, css, {textAlign: 'left'})}).appendTo(tr);
+          $('<td>', {id: id, css: $.extend({}, css, {textAlign: 'right'})}).appendTo(tr);
+        });
+        table.append(tr);
+      });
+
+      // マウスカーソルの位置を捉える要素
+      var range = $('<div>', {text: 'この範囲のマウスカーソルの位置がわかる', css: {margin: 5, padding: 5, border: '1px dashed black', position: 'absolute', cursor: 'default'}, offset: {left: width / 4, top: height / 4}, width: width / 2, height: height / 2}).appendTo(scrollable);
+      $(range).mousemove(function(ev) {
+        $.each(props, function(i, prop) {
+          $.each(axises, function(j, axis) {
+            var id = prop + '-' + axis;
+            var event = prop === 'layer' ? ev.originalEvent : ev;
+            $(document.getElementById(id)).text(event[prop + axis.toUpperCase()]);
+          });
+        });
+      });
+    // ]]></script>
+  </body>
+</html>

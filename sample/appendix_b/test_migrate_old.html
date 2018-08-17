@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>jQuery Migrate Pluginのテスト(old)</title>
+    <link rel="stylesheet" type="text/css" href="../lib/qunit-1.14.0.css" />
+    <script src="../lib/jquery-1.7.2.js"></script>
+    <script>// <![CDATA[
+      // jQueryの元バージョンを一時退避
+      $172 = jQuery.noConflict();
+    // ]]></script>
+    <script src="../lib/jquery-1.11.1.js"></script>
+    <script>// <![CDATA[
+      jQuery.migrateTrace = true;
+      jQuery.migrateMute  = false;
+    // ]]></script>
+    <script src="../lib/jquery-migrate-1.2.1.js"></script>
+    <script src="../lib/qunit-1.14.0.js"></script>
+    <script src="appold.js"></script>
+    <script src="test_appold.js"></script>
+  </head>
+  <body>
+    <div id="qunit"></div>
+    <div id="qunit-fixture"></div>
+  </body>
+</html>

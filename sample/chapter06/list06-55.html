@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>関数の登録と削除</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      var fn = function(n) {
+        return function() {
+          $('<div>', {text: '関数fn' + n + 'が実行された'}).appendTo(document.body);
+        };
+      };
+
+      var fn1 = fn(1), fn2 = fn(2), fn3 = fn(3);  // 登録・削除される関数
+
+      var callbacks = $.Callbacks();
+      callbacks.add(fn1).add(fn2).fire();  // fn1, fn2を続けて実行
+      callbacks.add(fn3).remove(fn1).remove(fn2).fire();  // fn3のみ実行
+
+      callbacks.empty();   // 登録されたすべての関数を削除
+      callbacks.add(fn1, fn2, fn3);    // 複数の引数で登録
+      callbacks.add([fn1, fn2, fn3]);  // 関数の配列で登録
+      callbacks.remove(fn1, fn2, fn3); // 複数の引数で削除
+    // ]]></script>
+  </body>
+</html>

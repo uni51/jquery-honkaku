@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>$.getと$.postの違い(1) - サーバ側の対応</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // Webサーバに送信するデータ
+      var obj = {name: 'jQuery'};
+
+      // GET, POSTそれぞれのメソッドでデータを送信するボタンを表示
+      var div = $('<div>').appendTo(document.body);
+      $.each(['get', 'post'], function(idx, method) {
+        $('<input>', {
+          type: 'button',
+          val: 'JSONデータを' + method.toUpperCase() + 'メソッドで送信',
+          click: function() {
+            $[method]('mycontent.php', obj, 'json').done(function(data, statusText, jqXHR) {
+              // dataは既にオブジェクト化済み
+              $('<p>', {text: data.method + 'メソッドで' + data.name + 'が送信されました'}).appendTo(div);
+            });
+        }}).appendTo(div);
+      });
+    // ]]></script>
+  </body>
+</html>

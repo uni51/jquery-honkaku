@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>HTML文字列の生成処理(3)</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+    <script src="../lib/jsrender.min.js"></script>
+    <script id="layout" type="text/x-jsrender">
+      <div>
+        <h4>jQuery関連プロダクト</h4>
+        {{include tmpl="#products"/}}
+      </div>
+    </script>
+    <script id="products" type="text/x-jsrender">
+      <ul>{{for items}}<li><a href="{{:link}}">{{>name}}</a></li>{{/for}}</ul>
+    </script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      (function($) {
+        // リンクを表示するためのデータ
+        var obj = {items: [
+          {name: 'jQuery',        link: 'http://jquery.com/'      },
+          {name: 'jQuery UI',     link: 'http://jqueryui.com/'    },
+          {name: 'jQuery Mobile', link: 'http://jquerymobile.com/'}
+        ]};
+        // HTML文字列の生成
+        var html = $('#layout').render(obj);
+        // 画面に表示
+        $(html).appendTo(document.body);
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>
