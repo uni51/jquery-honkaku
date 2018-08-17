@@ -2,17 +2,26 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>addやappendと$.parseHTMLとの組み合わせ</title>
+    <title>オブジェクトを配列のように操作する</title>
     <script src="../lib/jquery-1.11.1.min.js"></script>
   </head>
   <body>
     <script>// <![CDATA[
-      var s = 'jQueryの<a href="http://jquery.com/">Webサイト</a>へどうぞ';
+      var obj = {};   // 操作するオブジェクト
+      Array.prototype.push.call(obj, 'jQuery UI');  // pushメソッドで値を設定
+      Array.prototype.unshift.call(obj, 'jQuery');  // unshiftメソッドで配列の先頭に値を追加
 
-      $('<h5>appendと$.parseHTMLとの組み合わせ</h5>').appendTo(document.body);
-      $('body').append($.parseHTML(s));
-      $('<h5>addと$.parseHTMLとの組み合わせ</h5>').add($.parseHTML(s))
-                                                  .appendTo('body');
+      $('body').append(obj[0]).append("<br>")
+                .append(obj[1]).append("<br><br>");
+
+      $('body').append(obj.length).append("<br><br>");  // lengthプロパティは自動的に設定される
+
+      console.log(obj)
+      // オブジェクトから配列を生成
+      var arr = Array.prototype.slice.call(obj, 0);
+
+      console.log(arr)
+
     // ]]></script>
   </body>
 </html>
