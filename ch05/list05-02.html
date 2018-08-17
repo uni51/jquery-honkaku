@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>異なるバージョンのjQueryを共存</title>
+    <script src="../lib/jquery-1.11.0.min.js"></script>
+    <script src="../lib/jquery-2.1.0.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      $j21 = jQuery.noConflict(true);  // 前のjQueryオブジェクトを復活
+      $j21().jquery;  // '2.1.0'
+      $().jquery;     // '1.11.0'
+
+      document.write('$j21().jquery: ' + $j21().jquery + '<br />');
+      document.write('$().jquery: ' + $().jquery);
+    // ]]></script>
+  </body>
+</html>

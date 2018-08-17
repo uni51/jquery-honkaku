@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>ボタンがクリックされたらメッセージを表示</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div id="main">
+      <input id="msgbtn" type="button" value="クリックでメッセージ表示" />
+      <input id="clear" type="button" value="クリア" />
+    </div>
+    <script>// <![CDATA[
+      // <input id="msgbtn">がクリックされたらメッセージを表示する要素を追加
+      $(document).on('contextmenu', false);
+      $('#msgbtn').click(function() {
+        // ボタンのクリックによって実行されるイベント処理
+        $('<p>ボタンがクリックされました</p>').appendTo('#main');
+      });
+
+      // <input id="clear">がクリックされたらメッセージをクリア
+      $('#clear').click(function() {
+        $('#main p').remove();
+      });
+    // ]]></script>
+  </body>
+</html>

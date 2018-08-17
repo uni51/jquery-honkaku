@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>オブジェクトを配列のように操作する</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      var s = 'jQueryの<a href="http://jquery.com/">Webサイト</a>へどうぞ';
+
+      $('<h5>appendと$.parseHTMLとの組み合わせ</h5>').appendTo(document.body);
+      $('body').append($.parseHTML(s));
+      $('<h5>addと$.parseHTMLとの組み合わせ</h5>').add($.parseHTML(s))
+                                                  .appendTo('body');
+    // ]]></script>
+  </body>
+</html>
