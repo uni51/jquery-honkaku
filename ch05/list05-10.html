@@ -11,17 +11,17 @@
       console.log(ary instanceof Object);  // true
       console.log(ary instanceof Array);  // true
 
-      $('body').append(ary[0]).append("<br>")
-                .append(ary[1]).append("<br>")
-                .append(ary[2]).append("<br><hr>");
+      $('body').append(ary[0]).append("<br>")   // JavaScript
+                .append(ary[1]).append("<br>")  // CSS
+                .append(ary[2]).append("<br><hr>");  // HTML
 
       var obj = {0: 'jQuery', 1: 'jQuery UI', 2: 'jQuery Plugin'};  // オブジェクト
       console.log(obj instanceof Object);  // true
       console.log(obj instanceof Array);  // false
 
-      $('body').append(obj[0]).append("<br>")
-                .append(obj[1]).append("<br>")
-                .append(obj[2]).append("<br><hr>");
+      $('body').append(obj[0]).append("<br>")  // jQuery
+                .append(obj[1]).append("<br>")  // jQuery UI
+                .append(obj[2]).append("<br><hr>");  // jQuery Plugin
 
     // ]]></script>
   </body>
