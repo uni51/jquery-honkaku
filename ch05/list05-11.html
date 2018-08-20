@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>配列の並べ替えと関数</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      var Obj = function(id, tech){
+        this.id = id;
+        this.tech = tech;
+      }
+
+      Obj.prototype.toString = function() {
+        return '{id: '+ this.id +', tech: '+ this.tech +'}';
+      };
+
+      // 要素を並べ替える配列
+      var a = [
+        new Obj(2, 'CSS'),
+        new Obj(3, 'JavaScript'),
+        new Obj(1, 'HTML'),
+      ];
+
+      // 要素の比較を処理する関数を設定（nameはプロパティ名）
+      var sortBy = function(name) {
+        return function(a, b){
+          if      (a[name] == b[name]) return 0;  // プロパティの値が等しい時
+          else if (a[name] < b[name]) return -1;  // aのプロパティの値の方が小さい時
+          return 1; // それ以外（aのプロパティの値の方が大きい）
+        };
+      };
+
+      // aの要素をidプロパティ順に並び替え
+      a.sort(sortBy('id'));
+      document.write('<strong>idプロパティ順</strong><br />');
+      for(var i=0; i<a.length; i++){
+        document.write(a[i] + '<br />');
+      }
+
+      // aの要素をidプロパティ順に並び替え
+      a.sort(sortBy('tech'));
+      document.write('<strong>techプロパティ順</strong><br />');
+      for(var i=0; i<a.length; i++){
+        document.write(a[i] + '<br />');
+      }
+
+    // ]]></script>
+  </body>
+</html>

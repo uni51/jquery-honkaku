@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>addやappendと$.parseHTMLとの組み合わせ</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+    <style>
+      span.highlight {
+        background-color: #ffa;
+        color: red;
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <h4 id="head-1">jQuery</h4>
+      <h4 id="head-2">jQuery UI</h4>
+    </div>
+    <script>// <![CDATA[
+      (function($) {
+        $('h4').toArray();  // [<h4 id="head-1">のDOMオブジェクト, <h4 id="head-2">のDOMオブジェクト]
+
+        console.log($('h4').toArray() instanceof Array);  // true
+
+        console.log(document.getElementsByTagName('h4') instanceof Array); // false
+
+        arr = $('h4').get(); // $('h4').toArray()と同じ結果
+
+        for(let elm of arr) {
+            console.log(elm.id);  // head-1, head-2
+        };
+      })(jQuery);
+    // ]]></script>
+  </body>
+</html>
