@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>$.eachにオブジェクトのプロパティを設定</title>
+    <style>
+      ul {margin: 0; padding: 0;}
+      li {display: inline; margin: 5px; padding: 5px;}
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div><ul></ul></div>
+    <script>// <![CDATA[
+      // <label>と<input>の追加
+      $.each({first: 1, second: 2, third: 3}, function(key, value) {
+        var li = $('<li>').appendTo('ul');
+        $('<label>', {for: key, text: key}).appendTo(li);
+        $('<input>', {id:key, val:value, type: 'radio'}).appendTo(li);
+      });
+
+      // ラジオボタンにチェックをつける
+      $('#second').prop('checked', true);
+
+      // チェックされているボタンの<label>まで背景色をつける
+      $('ul li input').each(function() {
+        $(this).prev('label').css({padding: 5, backgroundColor: '#eee'});
+        return !$(this).prop('checked');
+      });
+
+    // ]]></script>
+  </body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>配列の要素からHTMLを生成</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div></div>
+    <script>// <![CDATA[
+      var para = [
+        'さまざまなWebサイトでjQueryが活躍しています',
+        'jQuery UIはjQueryにウィジェットなどを拡張するプラグインです'
+      ];
+
+      $.each(para, function(idx, txt) {
+        var tagId = 'para-' + ('000' + (idx + 1)).slice(-3);
+        $('<p>', {id: tagId, text: txt}).appendTo('div');
+      });
+    // ]]></script>
+  </body>
+</html>

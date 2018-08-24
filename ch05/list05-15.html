@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>$.eachにオブジェクトのプロパティを設定</title>
+    <style>
+      table { border-collapse: collapse; }
+      table td, table th { padding: 5px;  border: 1px solid black; }
+      table td.red {  color: red;  font-weight: bold; }
+      table td { text-align: right; }
+      table tr td:first-child { font-weight: bold;  text-align: left; }
+      div { width: 100px;  height: 100px;  margin: 0;  padding: 0;  border: none; }
+    </style>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <table>
+      <tr><th>CSS</th><th>width</th><th>innerWidth</th><th>outerWidth</th></tr>
+    </table>
+    <div></div>
+    <script>// <![CDATA[
+      function row(elem) {
+        return '<td>'   + Math.floor($(elem).width()) +
+               '</td><td>'  + Math.floor($(elem).innerWidth()) +
+               '</td><td>'  + Math.floor($(elem).outerWidth()) +
+               '</td>';
+      }
+
+      // 設定を追加していくCSS
+      var css = {margin: '10px', border: '5px solid', padding: '20px'};
+
+      // CSSを追加し、その後の要素の幅を表示
+      $.each(css, function(key, value) { // key: プロパティ名, value: プロパティの値
+        var elem = $('div');
+        elem.css(key, value);
+        $('<tr><td>' + key + ': ' + value + '</td>' + row(elem) + '</tr>').appendTo('table');
+      });
+
+      // 幅が100を超えたところは赤い太字
+      $('table td').each(function() {
+        var width = parseInt($(this).text());
+        if (width > 100)  $(this).addClass('red');
+      });
+    // ]]></script>
+  </body>
+</html>
