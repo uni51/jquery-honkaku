@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>オリジナルのmap関数を作成する - 要素毎の繰り返し処理</title>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // 配列の各要素を2倍にした要素を持つ配列を生成
+      var ra = [];
+      var ary = [10, 20, 30];
+
+      for(var i=0; i < ary.length; i++){
+        ra.push('ary[' + i + '] * 2 = ' + (ary[i] * 2));
+      }
+      console.log(ra);
+
+      // オブジェクトの各プロパティを文字列で表した要素を持つ配列を生成
+      var ro = [];
+      var obj = {first: 10, second: 20, third: 30};
+      for(var key in obj){
+        ro.push(key + ' = ' + obj[key]);
+      }
+      console.log(ro);
+
+    // ]]></script>
+  </body>
+</html>

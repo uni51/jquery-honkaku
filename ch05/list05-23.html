@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>オリジナルのmap関数を作成する - 関数の戻り値をpushの引数に設定</title>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // 配列の各要素を2倍にした要素を持つ配列を生成
+      var ary = [10, 20, 30];
+      var ra = [];
+      var fa = function(idx, value){
+        return 'ary[' + idx + '] * 2 = ' + (ary[idx] * 2);
+      };
+
+      for(var i in ary){
+        ra.push(fa(i, ary[i]));
+      }
+      console.log(ra);
+
+      // オブジェクトの各プロパティを文字列で表した要素を持つ配列を生成
+      var obj = {first: 10, second: 20, third: 30};
+      var ro = [];
+      var fo = function(key, value){
+        return key + ' = ' + obj[key];
+      };
+      for(var key in obj){
+        ro.push(fo(key, obj[key]));
+      }
+      console.log(ro)
+
+    // ]]></script>
+  </body>
+</html>

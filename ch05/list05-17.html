@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>mapメソッドの実行</title>
+    <script src="../lib/jquery-1.11.1.min.js"></script>
+  </head>
+  <body>
+    <div></div>
+    <script>// <![CDATA[
+      // <input type="checkbox">の追加
+      var obj = {first: 1, second: 2, third: 3};
+      $.each(obj, function(key, value) {
+        var cb = $('<input>', {id: key, val: value, type: 'checkbox'}).appendTo('div');
+        cb.prop('checked', Number(this) % 2 === 0);
+      });
+
+      // a1 = [false, true, false]
+      var a1 = $('div :checkbox').map(function() {
+        return this.checked;
+      }).get(); // 集合の要素を持つ配列のみが必要なときはgetメソッドで取得する
+      console.log(a1);
+
+      // a2 = [20, 40, 60]
+      var a2 = $.map([10, 20, 30], function(value, idx) {
+        return value * 2;
+      });
+      console.log(a2)
+
+      // a3 = ['first = 1', 'second = 2', 'third = 3']
+      var a3 = $.map(obj, function(value, key) {
+        return key + ' = ' + value;
+      });
+      console.log(a3)
+    // ]]></script>
+  </body>
+</html>

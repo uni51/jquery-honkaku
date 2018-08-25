@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>オリジナルのeach関数を作成する - 繰り返し処理を関数に置き換え</title>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // オリジナルのeach関数
+      function each(obj, f){
+        for(var key in obj) {
+          f(key, obj[key])
+        }
+      }
+
+      // each関数の実行
+      var ary = [10, 20, 30];
+      each(ary, function(idx, value){
+        document.write('ary[' + idx + '] = ' + value + '<br />');
+      });
+
+
+      var obj = {first: 'ひい', second: 'ふう', third: 'みい'};
+      each(obj, function(key, value){
+        document.write(key + ' = ' + value + '<br />');
+      });
+    // ]]></script>
+  </body>
+</html>

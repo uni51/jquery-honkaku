@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>オリジナルのeach関数を作成する - 要素ごとの繰り返し処理</title>
+  </head>
+  <body>
+    <script>// <![CDATA[
+      // 配列の各要素を表示
+      var a = [10, 20, 30];
+      for(var i = 0; i < a.length; i++) {
+        document.write('a['+i+'] = ' + a[i] + '<br />');
+      }
+
+      // オブジェクトの各プロパティを表示
+      var obj = {first: 'ひい', second: 'ふう', third: 'みい'};
+      for(var key in obj) {
+        document.write(key + ' = ' + obj[key] + '<br />');
+      }
+    // ]]></script>
+  </body>
+</html>
